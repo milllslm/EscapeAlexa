@@ -3,7 +3,7 @@ This sample demonstrates a simple skill built with the Amazon Alexa Skills Kit.
 The Intent Schema, Custom Slots, and Sample Utterances for this skill, as well
 as testing instructions are located at http://amzn.to/1LzFrj6
 
-For additional samples, visit the Alexa Skills Kit Getting Started guide at
+For additional samples, visit the Alexa Skills Kit Getting Started guide at testing push message
 http://amzn.to/1LGWsLG
 """
 
@@ -50,13 +50,14 @@ def get_welcome_response():
 
     session_attributes = {}
     card_title = "Welcome"
-    speech_output = "Welcome to the Alexa Skills Kit sample. " \
-                    "Please tell me your favorite color by saying, " \
-                    "my favorite color is red"
+    speech_output = "Welcome to the Alexa Escape Game. " \
+                    "This game will walk you through various rooms in your quest to escape the house. " \
+                    "Each room will be described to you, before outlining your possible moves, " \
+                    "If you would like to continue say, start game"
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
-    reprompt_text = "Please tell me your favorite color by saying, " \
-                    "my favorite color is red."
+    reprompt_text = "Please start the game by saying, " \
+                    "start game."
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
@@ -64,7 +65,7 @@ def get_welcome_response():
 
 def handle_session_end_request():
     card_title = "Session Ended"
-    speech_output = "Thank you for trying the Alexa Skills Kit sample. " \
+    speech_output = "Thank you for trying the Alexa Escape Game. " \
                     "Have a nice day! "
     # Setting this to true ends the session and exits the skill.
     should_end_session = True
@@ -75,6 +76,35 @@ def handle_session_end_request():
 def create_favorite_color_attributes(favorite_color):
     return {"favoriteColor": favorite_color}
 
+def first_room_dialogue(intent, session):
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = False
+    speech_output = "You have entered the first room, " \
+                    "we desperately need a storyboard soon, " \
+                    "I am not that creative. " \
+                    "At any point during the game, " \
+                    "you may say, options, for a full list of available " \
+                    "actions you may take."
+                    
+    reprompt_text = "Didn't catch that what did you say"
+    
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+        
+def list_options(intent, session):
+    """Lists all options for the player to act on
+    """
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = False
+    speech_output = "I got I got I got I got options, [movement options]" \
+                    " [inventory options] [built in alexa help and quit]"
+    
+    reprompt_text = "Didn't catch that what did you say"
+    
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
 
 def set_color_in_session(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
@@ -157,6 +187,10 @@ def on_intent(intent_request, session):
     # Dispatch to your skill's intent handlers
     if intent_name == "MyColorIsIntent":
         return set_color_in_session(intent, session)
+    elif intent_name == "StartGameIntent":
+        return first_room_dialogue(intent, session)
+    elif intent_name == "OptionsIntent":
+        return list_options(intent, session)
     elif intent_name == "WhatsMyColorIntent":
         return get_color_from_session(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
