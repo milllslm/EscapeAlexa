@@ -43,7 +43,8 @@ class Interactable:
     def onInteracted(self): #maybe we pass in what interacted with it?
         #do something, currentRoom.items += hiddenItems, maybe room
         #needs an onInteracted(self, interactable)
-        return "you interacted with " + self.name
+        #will need to return a map with :text and :itemsToAdd
+        return {"text" : "you interacted with " + self.name, "itemsToAdd" : self.hiddenItems}
         
 class Room:
     def __init__(self, name, description, edges, items, interactables):
@@ -54,12 +55,29 @@ class Room:
         self.interactables = interactables
         
     def onInteracted(self, interactable):
-        return interactable.onInteracted()
+        interactedMap = interactable.onInteracted()
+        for item in interactedMap["itemsToAdd"]:
+            for itemInItems in self.items:
+                if itemInItems.name is item:
+                    itemInItems.unlocked = True
+        return interactedMap["text"]
         
         #sample intialization of a room that works in a python repl
-# myRoom = Room("room", "a room", 
-#[Edge("edge", "an edge", True)], [Item("item", "an item", True)], 
-#[Interactable("interactable", "an interactable", True, [], [])])
+##myInteractable = Interactable("interactable", "an interactable", True, [], ["item"])
+
+##myRoom = Room("room", "a room", [], [Item("item", "an item", False)], [myInteractable])
+
+##print(myRoom.name)
+##print(myRoom.description)
+##print(myRoom.edges[0].name)
+
+##myRoom.edges.append(Edge("edge2", "another edge", True))
+
+#print(myRoom.onInteracted(myInteractable))
+
+#for item in myRoom.items:
+#  if item.isUnlocked():
+#    print(item.name)
         
 
 

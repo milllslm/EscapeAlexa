@@ -9,6 +9,59 @@ http://amzn.to/1LGWsLG
 
 from __future__ import print_function
 
+# --------------- Class Definitions, idk python very well so weshould move these
+
+class Edge:
+    def __init__(self, name, description, unlocked):
+        self.name = name
+        self. description = description
+        self.unlocked = unlocked
+        
+    def isUnlocked(self):
+        return self.unlocked
+
+class Item: 
+    def __init__(self, name, description, unlocked):
+        self.name = name
+        self. description = description
+        self.unlocked = unlocked 
+        
+    def isUnlocked(self): 
+        return self.unlocked
+
+class Interactable:
+    def __init__(self, name, description, unlocked, validItemsToUnlockSelf, hiddenItems):
+        self.name = name
+        self.description = description
+        self.unlocked = unlocked
+        self.validItemsToUnlockSelf = validItemsToUnlockSelf
+        self.hiddenItems = hiddenItems
+        
+    def isUnlocked(self):
+        return self.unlocked
+        
+    def onInteracted(self): #maybe we pass in what interacted with it?
+        #do something, currentRoom.items += hiddenItems, maybe room
+        #needs an onInteracted(self, interactable)
+        return "you interacted with " + self.name
+        
+class Room:
+    def __init__(self, name, description, edges, items, interactables):
+        self.name = name
+        self.description = description
+        self.edges = edges
+        self.items = items
+        self.interactables = interactables
+        
+    def onInteracted(self, interactable):
+        return interactable.onInteracted()
+        
+        #sample intialization of a room that works in a python repl
+# myRoom = Room("room", "a room", 
+#[Edge("edge", "an edge", True)], [Item("item", "an item", True)], 
+#[Interactable("interactable", "an interactable", True, [], [])])
+        
+
 
 # --------------- Helpers that build all of the responses ----------------------
 
