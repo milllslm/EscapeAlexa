@@ -12,10 +12,12 @@ from __future__ import print_function
 # --------------- Class Definitions, idk python very well so weshould move these
 
 class Edge:
-    def __init__(self, name, description, unlocked):
+    def __init__(self, name, description, unlocked, destination, validItemsToUnlockSelf):
         self.name = name
         self. description = description
         self.unlocked = unlocked
+        self.destination = destination
+        self.validItemsToUnlockSelf = validItemsToUnlockSelf
         
     def isUnlocked(self):
         return self.unlocked
@@ -44,15 +46,17 @@ class Interactable:
         #do something, currentRoom.items += hiddenItems, maybe room
         #needs an onInteracted(self, interactable)
         #will need to return a map with :text and :itemsToAdd
-        return {"text" : "you interacted with " + self.name, "itemsToAdd" : self.hiddenItems}
+        return {"text" : "you interacted with " + self.name + ". Inside you found " + ', '.join(self.hiddenItems),
+        "itemsToAdd" : self.hiddenItems}
         
 class Room:
-    def __init__(self, name, description, edges, items, interactables):
+    def __init__(self, name, description, edges, items, interactables, unlocked):
         self.name = name
         self.description = description
         self.edges = edges
         self.items = items
         self.interactables = interactables
+        self.unlocked = unlocked
         
     def onInteracted(self, interactable):
         interactedMap = interactable.onInteracted()
@@ -119,7 +123,7 @@ def get_welcome_response():
     add those here
     """
 
-    session_attributes = {}
+    session_attributes = {} #load the room from json or something, curRoom: Room1, inventory: []
     card_title = "Welcome"
     speech_output = "Welcome to the Alexa Escape Game. " \
                     "This game will walk you through various rooms in your quest to escape the house. " \
@@ -146,6 +150,9 @@ def handle_session_end_request():
 
 def create_favorite_color_attributes(favorite_color):
     return {"favoriteColor": favorite_color}
+    
+def create_new_inventory_with_item(itemToPickup, session):
+    return session['attributes']['inventory'].append(itemToPickup)
 
 def first_room_dialogue(intent, session):
     card_title = intent['name']
@@ -176,6 +183,25 @@ def list_options(intent, session):
     
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
+
+def pickup_item(intent, session):
+    "Picks up an item and adds it to the players inventory"
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = False
+    
+    if 'Item' in intent['slots']:
+        itemToPickup = intent['slots']['Item']['value']
+        session_attributes.update(create_new_inventory_with_item(itemToPickup, session))
+        speech_output = "You picked up the " + \
+                        itemToPickup + \
+                        " and added it to your inventory."
+        reprompt_text = "You can pick up items by saying, pickup 'item name'"
+        
+    else:
+        speech_output = "That is not a valid item, please try again by saying, pick up and then a valid item"
+        reprompt_text = "That is not a valid item, please try again by saying, pick up and then a valid item"
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
 def set_color_in_session(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
@@ -231,6 +257,8 @@ def get_color_from_session(intent, session):
 def on_session_started(session_started_request, session):
     """ Called when the session starts """
 
+    #load house(json file or something), gonna need to point session to the room below somehow
+    myRoom = Room("room", "a room", [], [Item("item", "an item", False)], [Interactable("interactable", "an interactable", True, [], ["item"])], True)
     print("on_session_started requestId=" + session_started_request['requestId']
           + ", sessionId=" + session['sessionId'])
 
@@ -262,6 +290,8 @@ def on_intent(intent_request, session):
         return first_room_dialogue(intent, session)
     elif intent_name == "OptionsIntent":
         return list_options(intent, session)
+    elif intent_name == "PickupIntent":
+        return pickup_item(intent, session)
     elif intent_name == "WhatsMyColorIntent":
         return get_color_from_session(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
