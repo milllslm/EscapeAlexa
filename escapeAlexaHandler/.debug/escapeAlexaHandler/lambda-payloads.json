@@ -1,1 +1,68 @@
-{}
+{
+    "escapeAlexaHandler": {
+        "lambda": {
+            "version": "1.0",
+            "session": {
+                "new": false,
+                "sessionId": "amzn1.echo-api.session.7c622fb1-23dd-45a2-bfb8-ab19ed38e596",
+                "application": {
+                    "applicationId": "amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e"
+                },
+                "attributes": {
+                    "curRoom": "{\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the room2. There remain no available items in this room that you may add to your inventory. In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": false, \"description\": \"an item\", \"name\": \"item\"}], \"edges\": [\"room2\"], \"name\": \"room\"}",
+                    "roomNameObjMap": "{\"endRoom\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"interactable2\", \"unlocked\": true}], \"description\": \"You have entered the endRoom . You may attempt move from this room to the room2. In this room there is a item3 that may be added to your inventory at this time.In terms of interactable objects, there is a interactable2.\", \"unlocked\": false, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"item3\"}], \"edges\": [\"room2\"], \"name\": \"endRoom\"}, \"room2\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"interactable2\", \"unlocked\": true}], \"description\": \"You have entered the room2 . You may attempt move from this room to the room, the endRoom. In this room there is a item2 that may be added to your inventory at this time.In terms of interactable objects, there is a interactable2.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"item2\"}], \"edges\": [\"room\", \"endRoom\"], \"name\": \"room2\"}, \"room\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the room2. There remain no available items in this room that you may add to your inventory. In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": false, \"description\": \"an item\", \"name\": \"item\"}], \"edges\": [\"room2\"], \"name\": \"room\"}}",
+                    "inventory": []
+                },
+                "user": {
+                    "userId": "amzn1.ask.account.AGOINRSARJTXZFDD5T4GHUMVRMN7VXPKDWDLSAR2BNNZNSLIHR3SLSZO5FZ4R3P2ZRND23IZ4JICBOPVVCNL7IRVFUOZW2RMPFVIZLWBGBDUZLZY7F672SXHDHEPOLTC5ZNIDAIIC4Y4RDINP22ETWU4RRWLOXUO2R7YDCIFLSHLLS3IYN4BIXD5OLYYIPMIYFS74VRDMIHM6QI"
+                }
+            },
+            "context": {
+                "System": {
+                    "application": {
+                        "applicationId": "amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e"
+                    },
+                    "user": {
+                        "userId": "amzn1.ask.account.AGOINRSARJTXZFDD5T4GHUMVRMN7VXPKDWDLSAR2BNNZNSLIHR3SLSZO5FZ4R3P2ZRND23IZ4JICBOPVVCNL7IRVFUOZW2RMPFVIZLWBGBDUZLZY7F672SXHDHEPOLTC5ZNIDAIIC4Y4RDINP22ETWU4RRWLOXUO2R7YDCIFLSHLLS3IYN4BIXD5OLYYIPMIYFS74VRDMIHM6QI"
+                    },
+                    "device": {
+                        "deviceId": "amzn1.ask.device.AFZPESPQQ4HIGM27L7PI6ANRREP6CR7BKA3AM5ONSVRYE63HKCT5GCZTODTYJLHOY3CMK2HW2EOXHM7IMPRKL24GS5HSWYOP7UIGOJZHONSKQKCFVYZ6K4XMDABCZABL7MCORJCWCGYTXVGJRF5F7IRY6EUG6FQWE75AM7AMIJDUCU4EN4XUC",
+                        "supportedInterfaces": {}
+                    },
+                    "apiEndpoint": "https://api.amazonalexa.com",
+                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzI3ODE5MCwiaWF0IjoxNTQzMjc0NTkwLCJuYmYiOjE1NDMyNzQ1OTAsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.byfzXzh98Fe39enQT5MRhE5K2D4b_TkvBb-Z9zN_ZFALNFp0NGs2_p39vzOc4xvr1otz3Z7HmYikfrVyHHml9M-4VQkYzU5jl99gzGH8-vflG3qJyxnxrBK9e_jAZovMhHPrrujmwwAN6_kR26UZ2ecxqVIo0cmK8bWHXeokXqPkMVPdWIVPdWA2zAyJ9Y4W4FzGBCYm1uAOaJLjX-FsB8lnxEF-dX3QvmvZKXGXl0nneaO1dJ9htHJAyHWjmSVfMGEPVGQ4hS_Iby0fgCZt-KLo6ZPnl6LBQxY5lZfhFnceYYe4ZObh8PIt46XnC68iYTQvQqSfwpCWPzZESeGq3g"
+                },
+                "Viewport": {
+                    "experiences": [
+                        {
+                            "arcMinuteWidth": 246,
+                            "arcMinuteHeight": 144,
+                            "canRotate": false,
+                            "canResize": false
+                        }
+                    ],
+                    "shape": "RECTANGLE",
+                    "pixelWidth": 1024,
+                    "pixelHeight": 600,
+                    "dpi": 160,
+                    "currentPixelWidth": 1024,
+                    "currentPixelHeight": 600,
+                    "touch": [
+                        "SINGLE"
+                    ]
+                }
+            },
+            "request": {
+                "type": "IntentRequest",
+                "requestId": "amzn1.echo-api.request.c4492d2d-1afd-433d-9ead-22579681b076",
+                "timestamp": "2018-11-26T23:23:10Z",
+                "locale": "en-US",
+                "intent": {
+                    "name": "StartGameIntent",
+                    "confirmationStatus": "NONE"
+                },
+                "dialogState": "STARTED"
+            }
+        }
+    }
+}

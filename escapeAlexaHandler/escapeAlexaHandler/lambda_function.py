@@ -8,9 +8,12 @@ http://amzn.to/1LGWsLG
 """
 
 from __future__ import print_function
+import jsonpickle
+import jsonpickle.tags as tags
+import jsonpickle.unpickler as unpickler
+import jsonpickle.util as util
 
-# --------------- Class Definitions, idk python very well so weshould move these
-# testing sachit
+# --------------- Class Definitions and global constants, idk python very well so weshould move these
 class Edge:
     def __init__(self, name, description, unlocked, destination, validItemsToUnlockSelf):
         self.name = name
@@ -32,9 +35,8 @@ class Item:
         return self.unlocked
 
 class Interactable:
-    def __init__(self, name, description, unlocked, validItemsToUnlockSelf, hiddenItems):
+    def __init__(self, name, unlocked, validItemsToUnlockSelf, hiddenItems):
         self.name = name
-        self.description = description
         self.unlocked = unlocked
         self.validItemsToUnlockSelf = validItemsToUnlockSelf
         self.hiddenItems = hiddenItems
@@ -46,17 +48,46 @@ class Interactable:
         #do something, currentRoom.items += hiddenItems, maybe room
         #needs an onInteracted(self, interactable)
         #will need to return a map with :text and :itemsToAdd
-        return {"text" : "you interacted with " + self.name + ". Inside you found " + ', '.join(self.hiddenItems),
+        return {"text" : "you interacted with " + self.name + ". Inside you found " + ', '.join(self.hiddenItems) + ".",
         "itemsToAdd" : self.hiddenItems}
-        
+
+def build_room_description(name, edges, items, interactables):
+    name_sentence = "You have entered the " + name + " . "
+    edges_sentence = ""
+    items_sentence = ""
+    interactables_sentence = ""
+    if not edges:
+        edges_sentence = "There are no escapes from this room."
+    else:
+        #make this more grammatically correct/flexible later
+        edges_sentence = "You may attempt move from this room to the " + ", the ".join(edges) + ". "
+    
+    available_items = []
+    for item in items:
+        if item.isUnlocked():
+            available_items.append(item)
+            
+    if not available_items:
+        items_sentence = "There remain no available items in this room that you may add to your inventory. "
+    else:
+        #make this more grammatically correct/flexible later
+        items_sentence = "In this room there is a " + ", a ".join(str(x.name) for x in available_items) + " that may be added to your inventory at this time."
+    
+    if not interactables:
+        interactables_sentence = "In terms of interactable objects, there are none."
+    else:
+        interactables_sentence = "In terms of interactable objects, there is a " + ", a ".join(str(x.name) for x in interactables) + "."
+    
+    return name_sentence + edges_sentence + items_sentence + interactables_sentence
+    
 class Room:
-    def __init__(self, name, description, edges, items, interactables, unlocked):
+    def __init__(self, name, edges, items, interactables, unlocked, validItemsToUnlockSelf):
         self.name = name
-        self.description = description
         self.edges = edges
         self.items = items
         self.interactables = interactables
         self.unlocked = unlocked
+        self.description = build_room_description(self.name, self.edges, self.items, self.interactables)
         
     def onInteracted(self, interactable):
         interactedMap = interactable.onInteracted()
@@ -83,7 +114,11 @@ class Room:
 #  if item.isUnlocked():
 #    print(item.name)
         
+myRoom = Room("room", ["room2"], [Item("item", "an item", False)], [Interactable("interactable", True, [], ["item"])], True, [])
+secondRoom =  Room("room2", ["room", "endRoom"], [Item("item2", "another item", True)], [Interactable("interactable2", True, [], [])], True, [])
+endRoom = Room("endRoom", ["room2"], [Item("item3", "another item", True)], [Interactable("interactable2", True, [], [])], False, ["item"])
 
+RoomNameObjMap = {"room" : myRoom, "room2": secondRoom, "endRoom": endRoom}
 
 # --------------- Helpers that build all of the responses ----------------------
 
@@ -115,6 +150,13 @@ def build_response(session_attributes, speechlet_response):
         'response': speechlet_response
     }
 
+def list_movement_options(session):
+    """Lists movement options for the player in the current context"""
+    return " ".join(str(x.name) for x in session['attributes']['currentRoom'].edges)
+    
+def list_inventory_options(session):
+    """Lists inventory options for the player in the current context"""
+    return " ".join(str(x.name) for x in session['attributes']['inventory'])
 
 # --------------- Functions that control the skill's behavior ------------------
 
@@ -122,8 +164,9 @@ def get_welcome_response():
     """ If we wanted to initialize the session to have some attributes we could
     add those here
     """
-
-    session_attributes = {} #load the room from json or something, curRoom: Room1, inventory: []
+    global myRoom
+    session_attributes = {}
+    session_attributes = {"curRoom": jsonpickle.encode(myRoom), "inventory": [], "roomNameObjMap": jsonpickle.encode(RoomNameObjMap)} #load the room from json or something, curRoom: Room1, inventory: []
     card_title = "Welcome"
     speech_output = "Welcome to the Alexa Escape Game. " \
                     "This game will walk you through various rooms in your quest to escape the house. " \
@@ -152,18 +195,19 @@ def create_favorite_color_attributes(favorite_color):
     return {"favoriteColor": favorite_color}
     
 def create_new_inventory_with_item(itemToPickup, session):
-    return session['attributes']['inventory'].append(itemToPickup)
+    return {"inventory": session['attributes']['inventory'].append(itemToPickup)}
 
 def first_room_dialogue(intent, session):
     card_title = intent['name']
+    
     session_attributes = {}
+    session_attributes = session['attributes']
+    curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=Room)
+    
+    
     should_end_session = False
-    speech_output = "You have entered the first room, " \
-                    "we desperately need a storyboard soon, " \
-                    "I am not that creative. " \
-                    "At any point during the game, " \
-                    "you may say, options, for a full list of available " \
-                    "actions you may take."
+    
+    speech_output = curRoom.description
                     
     reprompt_text = "Didn't catch that what did you say"
     
@@ -174,20 +218,25 @@ def list_options(intent, session):
     """Lists all options for the player to act on
     """
     card_title = intent['name']
-    session_attributes = {}
+    session_attributes = session['attributes']
     should_end_session = False
-    speech_output = "I got I got I got I got options, [movement options]" \
-                    " [inventory options] [built in alexa help and quit]"
+    movement_options = ""
+    inventory_options = ""
+    movement_options = list_movement_options(session)
+    inventory_options = list_inventory_options(session)
+    built_in_alexa_options = "something something help and quit"
+    speech_output = "I got I got I got I got options, " + movement_options + " " + inventory_options + " " + built_in_alexa_options
     
     reprompt_text = "Didn't catch that what did you say"
     
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
+
 def pickup_item(intent, session):
     "Picks up an item and adds it to the players inventory"
     card_title = intent['name']
-    session_attributes = {}
+    session_attributes = session['attributes']
     should_end_session = False
     
     if 'Item' in intent['slots']:
@@ -202,6 +251,33 @@ def pickup_item(intent, session):
         speech_output = "That is not a valid item, please try again by saying, pick up and then a valid item"
         reprompt_text = "That is not a valid item, please try again by saying, pick up and then a valid item"
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
+    
+
+def interact_handler(intent, session):
+    "Interact with an interactable and resultant effects"
+    card_title = intent['name']
+    session_attributes = session['attributes']
+    curRoom = session_attributes['curRoom']
+    
+    should_end_session = False
+    reprompt_text = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
+
+    
+    if 'Interactable' in intent['slots']:
+        thingToInteractWith = intent['slots']['Interactable']['value']
+        interactedObject = None
+        for interactable in curRoom.interactables:
+            if thingToInteractWith == interactable.name:
+                interactedObject = interactable
+        if not interactedObject:
+            speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
+        else:
+            speech_output = curRoom.onInteracted(interactedObject)
+    else:
+        speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
+    session_attributes.update({'curRoom': curRoom})
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
+
 
 def set_color_in_session(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
@@ -258,7 +334,6 @@ def on_session_started(session_started_request, session):
     """ Called when the session starts """
 
     #load house(json file or something), gonna need to point session to the room below somehow
-    myRoom = Room("room", "a room", [], [Item("item", "an item", False)], [Interactable("interactable", "an interactable", True, [], ["item"])], True)
     print("on_session_started requestId=" + session_started_request['requestId']
           + ", sessionId=" + session['sessionId'])
 
@@ -290,6 +365,8 @@ def on_intent(intent_request, session):
         return first_room_dialogue(intent, session)
     elif intent_name == "OptionsIntent":
         return list_options(intent, session)
+    elif intent_name == "InteractIntent":
+        return interact_handler(intent, session)
     elif intent_name == "PickupIntent":
         return pickup_item(intent, session)
     elif intent_name == "WhatsMyColorIntent":
