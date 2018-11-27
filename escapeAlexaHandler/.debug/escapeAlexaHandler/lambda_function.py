@@ -202,7 +202,7 @@ def first_room_dialogue(intent, session):
     
     session_attributes = {}
     session_attributes = session['attributes']
-    curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=Room)
+    curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
     
     
     should_end_session = False
@@ -257,17 +257,17 @@ def interact_handler(intent, session):
     "Interact with an interactable and resultant effects"
     card_title = intent['name']
     session_attributes = session['attributes']
-    curRoom = session_attributes['curRoom']
+    curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
     
     should_end_session = False
     reprompt_text = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
 
     
     if 'Interactable' in intent['slots']:
-        thingToInteractWith = intent['slots']['Interactable']['value']
+        thingToInteractWith = intent['slots']['Interactable']['name']
         interactedObject = None
         for interactable in curRoom.interactables:
-            if thingToInteractWith == interactable.name:
+            if thingToInteractWith.lower() == interactable.name.lower():
                 interactedObject = interactable
         if not interactedObject:
             speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
@@ -275,7 +275,7 @@ def interact_handler(intent, session):
             speech_output = curRoom.onInteracted(interactedObject)
     else:
         speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
-    session_attributes.update({'curRoom': curRoom})
+    session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
 

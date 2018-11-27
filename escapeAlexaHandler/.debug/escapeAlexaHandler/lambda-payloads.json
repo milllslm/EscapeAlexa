@@ -4,7 +4,7 @@
             "version": "1.0",
             "session": {
                 "new": false,
-                "sessionId": "amzn1.echo-api.session.7c622fb1-23dd-45a2-bfb8-ab19ed38e596",
+                "sessionId": "amzn1.echo-api.session.e2afe18e-06ff-441b-a133-eb7bf1a0ca83",
                 "application": {
                     "applicationId": "amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e"
                 },
@@ -30,7 +30,7 @@
                         "supportedInterfaces": {}
                     },
                     "apiEndpoint": "https://api.amazonalexa.com",
-                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzI3ODE5MCwiaWF0IjoxNTQzMjc0NTkwLCJuYmYiOjE1NDMyNzQ1OTAsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.byfzXzh98Fe39enQT5MRhE5K2D4b_TkvBb-Z9zN_ZFALNFp0NGs2_p39vzOc4xvr1otz3Z7HmYikfrVyHHml9M-4VQkYzU5jl99gzGH8-vflG3qJyxnxrBK9e_jAZovMhHPrrujmwwAN6_kR26UZ2ecxqVIo0cmK8bWHXeokXqPkMVPdWIVPdWA2zAyJ9Y4W4FzGBCYm1uAOaJLjX-FsB8lnxEF-dX3QvmvZKXGXl0nneaO1dJ9htHJAyHWjmSVfMGEPVGQ4hS_Iby0fgCZt-KLo6ZPnl6LBQxY5lZfhFnceYYe4ZObh8PIt46XnC68iYTQvQqSfwpCWPzZESeGq3g"
+                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzI4MDkzMSwiaWF0IjoxNTQzMjc3MzMxLCJuYmYiOjE1NDMyNzczMzEsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.EOO834yNMCSOkiJFlfLzUcnuOqO0Ceiv5pjInYJ4TMYDW6O9zzxKSzBgcvYBFjcGRueJUVqEh758BAH-UZI7AsEV95nxqNmmM7t7izhl6_JlU0jg6oJzr3snRrXZFrCxXSneajs1qKwhyuQDfEHYkHxFqmJSfL2LiMvd2VRm7PK1ZbzcNXzHW-QPMw4voYBxAFEy4zAeZ8aeh8k75O4U6EebNBO8zUyJmO2GqOzH7oXCi2GL2QOX-SRcUI37TdeaKuKYKR4YmtYzQOzDEOtCxW7LAhzkJ_EL3dVhiEhnbQ17ohQ6ziOYPhl6Hu-Y5QEMrX9zyTkaH7hIYIhGzgujvw"
                 },
                 "Viewport": {
                     "experiences": [
@@ -54,12 +54,18 @@
             },
             "request": {
                 "type": "IntentRequest",
-                "requestId": "amzn1.echo-api.request.c4492d2d-1afd-433d-9ead-22579681b076",
-                "timestamp": "2018-11-26T23:23:10Z",
+                "requestId": "amzn1.echo-api.request.a8735449-2ae8-49f5-9992-68fd661ecbdd",
+                "timestamp": "2018-11-27T00:08:51Z",
                 "locale": "en-US",
                 "intent": {
-                    "name": "StartGameIntent",
-                    "confirmationStatus": "NONE"
+                    "name": "InteractIntent",
+                    "confirmationStatus": "NONE",
+                    "slots": {
+                        "Interactable": {
+                            "name": "Interactable",
+                            "confirmationStatus": "NONE"
+                        }
+                    }
                 },
                 "dialogState": "STARTED"
             }
