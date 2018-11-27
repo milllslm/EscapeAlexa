@@ -294,7 +294,10 @@ def move_rooms(intent, session):
     
     if 'Edge' in intent['slots']:
         roomToEnter = intent['slots']['Edge']['value']
-        if roomToEnter not in room_names_list or not jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter].unlocked:
+        mymap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
+        something = mymap[roomToEnter].unlocked
+        #why is it skipping all these lines of code in the debugger
+        if roomToEnter not in room_names_list or not jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter].unlocked or roomToEnter not in curRoom.edges:
             speech_output = "You are not able to enter that room from here, either the room is locked or is not accessible from this one."
         else:
             #its a valid room, lets move
