@@ -4,7 +4,7 @@
             "version": "1.0",
             "session": {
                 "new": false,
-                "sessionId": "amzn1.echo-api.session.0aba014d-0a25-4398-ba84-93ce613fc09b",
+                "sessionId": "amzn1.echo-api.session.7d483218-4171-458e-8c66-ec4520e389dc",
                 "application": {
                     "applicationId": "amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e"
                 },
@@ -30,7 +30,7 @@
                         "supportedInterfaces": {}
                     },
                     "apiEndpoint": "https://api.amazonalexa.com",
-                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzI5MjQ4OCwiaWF0IjoxNTQzMjg4ODg4LCJuYmYiOjE1NDMyODg4ODgsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.I8Bkv0a2N4ou9KTLb5EB6lait8QErPvVVjfcHKTEtAKwbp7EnDO8jHrbRlLI0uYAiZlO7LYMLDsZ77bYTF-pQ7KSqs2AWiQ_xbuxSbcKQNyeK0AU_m_QIHioho-Yj6AsTQdRiMuv4Mf-1r2d_Qmlo6XwPdtiw65lg4Y3JgIEAHXU0aHxaKrDXw_srIhf8-u7O5WStXSGKfKknBbnyUVUYlXh6U-65JJKzhjurnP66ELOmSpy4oflIFZHXsO3vRYlUm516UYVessyjrQs3-fWFVOY-t1sjnYX-GXvsAQ1TGTG5hIVuotsg9ABJ_fogBij92cIZQQnc4dusDlJPlqGrA"
+                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzI5NjIyMSwiaWF0IjoxNTQzMjkyNjIxLCJuYmYiOjE1NDMyOTI2MjEsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.ORS6Zkr6NIlWijYMtwXQFNr1hZ794OXxLksRtyAWpuOeCe4c3zP1vOM7pEOUarQmHsP9lLBqaPVQLE2jvtxuVMES94u50BBp5-0Q68yzXrhnO8ZN9Eu7BhTTlUjXYcogrbpurX0IMPURG2-KNZhXnmytPFmMP-z10N2XRidk_lkZRjjwzTwxo2XM7ZPaL6UGN9jZSwDCfcSx9VSw_zFSZBpjCMIIKXEi5ftXLROSz4ccYg_LEkNfpdrR-lRD37FnSCJALztJ8kTaMxzfatkwL-jraUJmyfNK04SEyxY_woa5fIG19CKPlkjMMQRP6hcB0VSA-qeJKaYml7I3wh521g"
                 },
                 "Viewport": {
                     "experiences": [
@@ -54,15 +54,15 @@
             },
             "request": {
                 "type": "IntentRequest",
-                "requestId": "amzn1.echo-api.request.d7315584-d2cc-4457-b8b8-3f89daaac30e",
-                "timestamp": "2018-11-27T03:21:28Z",
+                "requestId": "amzn1.echo-api.request.53ec4e3b-a272-4b3b-ac20-adcefb2e9871",
+                "timestamp": "2018-11-27T04:23:41Z",
                 "locale": "en-US",
                 "intent": {
-                    "name": "PickupIntent",
+                    "name": "InteractIntent",
                     "confirmationStatus": "NONE",
                     "slots": {
-                        "Item": {
-                            "name": "Item",
+                        "Interactable": {
+                            "name": "Interactable",
                             "confirmationStatus": "NONE"
                         }
                     }

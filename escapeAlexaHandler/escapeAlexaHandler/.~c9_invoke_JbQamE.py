@@ -93,10 +93,8 @@ class Room:
         interactedMap = interactable.onInteracted()
         for item in interactedMap["itemsToAdd"]:
             for itemInItems in self.items:
-                if itemInItems.name.lower() == item:
+                if itemInItems.name is item:
                     itemInItems.unlocked = True
-        
-        self.description = build_room_description(self.name, self.edges, self.items, self.interactables)
         return interactedMap["text"]
         
         #sample intialization of a room that works in a python repl
@@ -246,23 +244,18 @@ def pickup_item(intent, session):
     else:
         priorInventory = jsonpickle.decode(session_attributes['inventory'])
     should_end_session = False
-    speech_output = ""
-    
     
     if 'Item' in intent['slots']:
         itemToPickup = intent['slots']['Item']['name']
         for item in curRoom.items:
             if item.name.lower() == itemToPickup.lower() and item.isUnlocked():
                 session_attributes.update(create_new_inventory_with_item(itemToPickup, priorInventory))
-                speech_output = "You picked up the " + \
+        
+        speech_output = "You picked up the " + \
                         itemToPickup + \
                         " and added it to your inventory."
-                reprompt_text = "You can pick up items by saying, pickup 'item name'"
-                break
-
-        if not speech_output:
-            speech_output = "You tried to pick up an item that either wasn't in this room or was not yet unlocked, try again."
-            reprompt_text = "That is not a valid item, please try again by saying, pick up and then a valid item"
+        reprompt_text = "You can pick up items by saying, pickup 'item name'"
+        
     else:
         speech_output = "That is not a valid item, please try again by saying, pick up and then a valid item"
         reprompt_text = "That is not a valid item, please try again by saying, pick up and then a valid item"
