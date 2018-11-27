@@ -240,7 +240,7 @@ def pickup_item(intent, session):
     should_end_session = False
     
     if 'Item' in intent['slots']:
-        itemToPickup = intent['slots']['Item']['value']
+        itemToPickup = intent['slots']['Item']['name']
         session_attributes.update(create_new_inventory_with_item(itemToPickup, session))
         speech_output = "You picked up the " + \
                         itemToPickup + \
