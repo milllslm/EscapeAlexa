@@ -4,14 +4,16 @@
             "version": "1.0",
             "session": {
                 "new": false,
-                "sessionId": "amzn1.echo-api.session.97705cb5-882b-4f54-bab8-96c2f99e3614",
+                "sessionId": "amzn1.echo-api.session.b7eb2058-3931-41fc-bb69-781e403882f3",
                 "application": {
                     "applicationId": "amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e"
                 },
                 "attributes": {
-                    "curRoom": "{\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the other room. There remain no available items in this room that you may add to your inventory. In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": false, \"description\": \"an item\", \"name\": \"item\"}], \"edges\": [\"other room\"], \"name\": \"room\"}",
-                    "roomNameObjMap": "{\"endRoom\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"yet another interactable\", \"unlocked\": true}], \"description\": \"You have entered the endRoom . You may attempt move from this room to the other room. In this room there is a yet another item that may be added to your inventory at this time.In terms of interactable objects, there is a yet another interactable.\", \"unlocked\": false, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"yet another item\"}], \"edges\": [\"other room\"], \"name\": \"endRoom\"}, \"other room\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"other interactable\", \"unlocked\": true}], \"description\": \"You have entered the other room . You may attempt move from this room to the room, the endRoom. In this room there is a other item that may be added to your inventory at this time.In terms of interactable objects, there is a other interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"other item\"}], \"edges\": [\"room\", \"endRoom\"], \"name\": \"other room\"}, \"room\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the other room. There remain no available items in this room that you may add to your inventory. In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": false, \"description\": \"an item\", \"name\": \"item\"}], \"edges\": [\"other room\"], \"name\": \"room\"}}",
-                    "inventory": []
+                    "curRoom": "{\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"other interactable\", \"unlocked\": true}], \"description\": \"You have entered the other room . You may attempt move from this room to the room, the endroom. In this room there is a other item that may be added to your inventory at this time.In terms of interactable objects, there is a other interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"other item\"}], \"validItemsToUnlockSelf\": [], \"edges\": [\"room\", \"endroom\"], \"name\": \"other room\"}",
+                    "roomNameObjMap": "{\"endroom\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"yet another interactable\", \"unlocked\": true}], \"description\": \"You have entered the endroom . You may attempt move from this room to the other room. In this room there is a yet another item that may be added to your inventory at this time.In terms of interactable objects, there is a yet another interactable.\", \"unlocked\": false, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"yet another item\"}], \"validItemsToUnlockSelf\": [\"item\"], \"edges\": [\"other room\"], \"name\": \"endroom\"}, \"other room\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"other interactable\", \"unlocked\": true}], \"description\": \"You have entered the other room . You may attempt move from this room to the room, the endroom. In this room there is a other item that may be added to your inventory at this time.In terms of interactable objects, there is a other interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"other item\"}], \"validItemsToUnlockSelf\": [], \"edges\": [\"room\", \"endroom\"], \"name\": \"other room\"}, \"room\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the other room. There remain no available items in this room that you may add to your inventory. In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": false, \"description\": \"an item\", \"name\": \"item\"}], \"validItemsToUnlockSelf\": [], \"edges\": [\"other room\"], \"name\": \"room\"}}",
+                    "inventory": [
+                        "item"
+                    ]
                 },
                 "user": {
                     "userId": "amzn1.ask.account.AGOINRSARJTXZFDD5T4GHUMVRMN7VXPKDWDLSAR2BNNZNSLIHR3SLSZO5FZ4R3P2ZRND23IZ4JICBOPVVCNL7IRVFUOZW2RMPFVIZLWBGBDUZLZY7F672SXHDHEPOLTC5ZNIDAIIC4Y4RDINP22ETWU4RRWLOXUO2R7YDCIFLSHLLS3IYN4BIXD5OLYYIPMIYFS74VRDMIHM6QI"
@@ -30,7 +32,7 @@
                         "supportedInterfaces": {}
                     },
                     "apiEndpoint": "https://api.amazonalexa.com",
-                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzMwMzM0NCwiaWF0IjoxNTQzMjk5NzQ0LCJuYmYiOjE1NDMyOTk3NDQsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.DtDd6S6As7wBP4B3O2FWZ-aUbyy945-D5ljMDsr-k-NatjZrq6ALvwugElDIsynYaOik3OR7nkKcLsaeAhnefC5BsVZNlEEkr5b_BhD6cOQMpeaD-xrg8v5K6Uhw_yIhPRBc06H5qXnWBR1cILYnSwBRXJbPNgIaFFBeIwwT2Cchrz4bEAG1vRcRzcSvQQRTixi_2M5Bj71BoJB_L5V2ccAvXjNT2k6yQRpIWyBExKM-kB4Ppx8cuWRmB2btirIka5ByeDIWyNag9BeyITxn80FzlmuES9IKRNSSqM4qTYalMz19BNl1Ra5IIm9sFLkh6jokd0UB5l4xairsZs04CA"
+                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzMxMDA5OCwiaWF0IjoxNTQzMzA2NDk4LCJuYmYiOjE1NDMzMDY0OTgsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.J6RnrEkgL7c6ylppglpzWXebBYa_7uLdC8m0otmRiE_l4ZyUZjF6CxIMNM_US7FIdvzbgl69_1fb4EQBXnX934lYH-H_xuuvUn-FBadEnQ9fn-xZ4YMU-1ID8_oFSWbrfmkALcXQqXEvu4KcyJN8EHUO-0ZrhsutTNR6Tn0fg1rDuK8ahG9nP_JB2nVInI8hU5pTatXT7hl22RZb1x0AjQCjPHM61-9XZRe_OtHFPMoyQI7i4NVCs54p_UzHmv-Xh5THoZgXpjX7nYc9umczlCDIVjxHPkHkgZdndEvLojAvtJXNG8dA45JddVqJdRUAUcaC3Ym-HnpsU5znD-jkJg"
                 },
                 "Viewport": {
                     "experiences": [
@@ -54,28 +56,40 @@
             },
             "request": {
                 "type": "IntentRequest",
-                "requestId": "amzn1.echo-api.request.ffa64031-1d61-455c-bd26-bcc7afe3ab03",
-                "timestamp": "2018-11-27T06:22:24Z",
+                "requestId": "amzn1.echo-api.request.7f23cc88-74cb-4163-8a96-f6195fdf5293",
+                "timestamp": "2018-11-27T08:14:58Z",
                 "locale": "en-US",
                 "intent": {
-                    "name": "MoveIntent",
+                    "name": "UseIntent",
                     "confirmationStatus": "NONE",
                     "slots": {
-                        "Edge": {
-                            "name": "Edge",
-                            "value": "other room",
+                        "Item": {
+                            "name": "Item",
+                            "value": "item",
                             "resolutions": {
                                 "resolutionsPerAuthority": [
                                     {
-                                        "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e.LIST_OF_ROOMS",
+                                        "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e.LIST_OF_ITEMS",
                                         "status": {
                                             "code": "ER_SUCCESS_MATCH"
                                         },
                                         "values": [
                                             {
                                                 "value": {
-                                                    "name": "other room",
-                                                    "id": "3ca87683e2ba62ee2bc8a0158d12e2b3"
+                                                    "name": "item",
+                                                    "id": "447b7147e84be512208dcc0995d67ebc"
+                                                }
+                                            },
+                                            {
+                                                "value": {
+                                                    "name": "other item",
+                                                    "id": "9254cce2a8ed6cca1af3e514d7249f79"
+                                                }
+                                            },
+                                            {
+                                                "value": {
+                                                    "name": "yet another item",
+                                                    "id": "a249f4b1c646b34e8e94e4ad3fa310c7"
                                                 }
                                             }
                                         ]
@@ -84,6 +98,10 @@
                             },
                             "confirmationStatus": "NONE",
                             "source": "USER"
+                        },
+                        "UsedOn": {
+                            "name": "UsedOn",
+                            "confirmationStatus": "NONE"
                         }
                     }
                 },

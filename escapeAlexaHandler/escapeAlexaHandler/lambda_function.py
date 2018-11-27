@@ -87,6 +87,7 @@ class Room:
         self.items = items
         self.interactables = interactables
         self.unlocked = unlocked
+        self.validItemsToUnlockSelf = validItemsToUnlockSelf
         self.description = build_room_description(self.name, self.edges, self.items, self.interactables)
         
     def onInteracted(self, interactable):
@@ -101,10 +102,10 @@ class Room:
 
         
 myRoom = Room("room", ["other room"], [Item("item", "an item", False)], [Interactable("interactable", True, [], ["item"])], True, [])
-secondRoom =  Room("other room", ["room", "endRoom"], [Item("other item", "another item", True)], [Interactable("other interactable", True, [], [])], True, [])
-endRoom = Room("endRoom", ["other room"], [Item("yet another item", "another item", True)], [Interactable("yet another interactable", True, [], [])], False, ["item"])
+secondRoom =  Room("other room", ["room", "endroom"], [Item("other item", "another item", True)], [Interactable("other interactable", True, [], [])], True, [])
+endRoom = Room("endroom", ["other room"], [Item("yet another item", "another item", True)], [Interactable("yet another interactable", True, [], [])], False, ["item"])
 
-RoomNameObjMap = {"room" : myRoom, "other room": secondRoom, "endRoom": endRoom}
+RoomNameObjMap = {"room" : myRoom, "other room": secondRoom, "endroom": endRoom}
 
 # --------------- Helpers that build all of the responses ----------------------
 
@@ -288,7 +289,7 @@ def move_rooms(intent, session):
     curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
     should_end_session = False
     reprompt_text = "You are not able to enter that room from here, either the room is locked or is not accessible from this one."
-    room_names_list_ish =jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
+    room_names_list_ish = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
     room_names_list = room_names_list_ish.keys()
     
     if 'Edge' in intent['slots']:
@@ -304,6 +305,68 @@ def move_rooms(intent, session):
         speech_output = "That is not a valid room to enter, please try again by saying, move to the , and then the room name"
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
             
+def use_handler(intent, session):
+    """ Use an item on an interactable or an edge"""
+    card_title = intent['name']
+    session_attributes = session['attributes']
+    curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
+    if not session_attributes['inventory']:
+        priorInventory = []
+    else:
+        priorInventory = session_attributes['inventory']
+    should_end_session = False
+    reprompt_text = "Not sure what you were trying to do there, try again."
+    
+    if 'UsedOn' in intent['slots'] and 'Item' in intent['slots']:
+        #check for valid items and valid usedon, then do the action
+        usedOnName = intent['slots']['UsedOn']['value']
+        itemName = intent['slots']['Item']['value']
+        if itemName not in priorInventory:
+            speech_output = "You tried using an item that does not exist in your inventory, try again please."
+        else:
+            oldRoomNameObjMap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
+            room_names_list = oldRoomNameObjMap.keys()
+            if usedOnName in room_names_list:
+                #they tried using item on a room, see if its valid from here
+                if usedOnName in curRoom.edges:
+                    #the room is within striking distance of this current room, check if item works on it
+                    nextRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[usedOnName]
+                    if itemName in nextRoom.validItemsToUnlockSelf:
+                        #unlock that bad boy
+                        nextRoom.unlocked = True
+                        #need to update with the new key value pair
+                        newKeyVal = {usedOnName: nextRoom}
+                        oldRoomNameObjMap.update(newKeyVal)
+                        session_attributes.update({'roomNameObjMap': jsonpickle.encode(oldRoomNameObjMap)})
+                        speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now enter that room."
+                    else:
+                        #this item doesnt work with this room
+                        speech_output = "The item you are using does not work on the room you are trying it on, try again."
+                else:
+                    #desired room is not within striking distance
+                    speech_output = "You are trying to use your item on a room that is not accessible from the one you are currently in, try moving!"
+            else:
+                #they tried using item on an interactable, see if its valid in given room then with given item
+                interactedObject = None
+                for interactable in curRoom.interactables:
+                    if usedOnName.lower() == interactable.name.lower():
+                        interactedObject = interactable
+                if not interactedObject:
+                    speech_output = "The interactable that you are trying to use your item on is not in the current room."
+                else:
+                    #valid item, valid interactable, check if they match up
+                    if usedOnName in interactedObject.validItemsToUnlockSelf:
+                        #unlock that bad boy
+                        interactedObject.unlocked = True
+                        speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now interact with it."
+                    else:
+                        speech_output = "The item you are using is not valid for unlocking the interactable in question, try again."
+        
+    else:
+        speech_output = "You either tried to use an item that does not exist or tried to use said item on an interactable or edge that does not exist."
+    
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
+
 def set_color_in_session(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
     user.
@@ -396,6 +459,8 @@ def on_intent(intent_request, session):
         return pickup_item(intent, session)
     elif intent_name == "MoveIntent":
         return move_rooms(intent, session)
+    elif intent_name == "UseIntent":
+        return use_handler(intent, session)
     elif intent_name == "WhatsMyColorIntent":
         return get_color_from_session(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
