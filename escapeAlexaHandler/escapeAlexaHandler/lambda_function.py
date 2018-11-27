@@ -194,8 +194,9 @@ def handle_session_end_request():
 def create_favorite_color_attributes(favorite_color):
     return {"favoriteColor": favorite_color}
     
-def create_new_inventory_with_item(itemToPickup, session):
-    return {"inventory": session['attributes']['inventory'].append(itemToPickup)}
+def create_new_inventory_with_item(itemToPickup, priorInventory):
+    priorInventory.append(itemToPickup)
+    return {"inventory": priorInventory}
 
 def first_room_dialogue(intent, session):
     card_title = intent['name']
@@ -237,11 +238,16 @@ def pickup_item(intent, session):
     "Picks up an item and adds it to the players inventory"
     card_title = intent['name']
     session_attributes = session['attributes']
+    curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
+    if not session_attributes['inventory']:
+        priorInventory = []
+    else:
+        priorInventory = jsonpickle.decode(session_attributes['inventory'])
     should_end_session = False
     
     if 'Item' in intent['slots']:
         itemToPickup = intent['slots']['Item']['name']
-        session_attributes.update(create_new_inventory_with_item(itemToPickup, session))
+        session_attributes.update(create_new_inventory_with_item(itemToPickup, priorInventory))
         speech_output = "You picked up the " + \
                         itemToPickup + \
                         " and added it to your inventory."
