@@ -238,13 +238,14 @@ def list_options(intent, session):
 
 def pickup_item(intent, session):
     "Picks up an item and adds it to the players inventory"
+    #TODO: error when picking up item, wont remove it from list of room.items
     card_title = intent['name']
     session_attributes = session['attributes']
     curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
     if not session_attributes['inventory']:
         priorInventory = []
     else:
-        priorInventory = jsonpickle.decode(session_attributes['inventory'])
+        priorInventory = session_attributes['inventory']
     should_end_session = False
     speech_output = ""
     
@@ -254,6 +255,8 @@ def pickup_item(intent, session):
         for item in curRoom.items:
             if item.name.lower() == itemToPickup.lower() and item.isUnlocked():
                 session_attributes.update(create_new_inventory_with_item(itemToPickup, priorInventory))
+                curRoom.items = [x for x in curRoom.items if  itemToPickup.lower() != x.name.lower()]
+                session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
                 speech_output = "You picked up the " + \
                         itemToPickup + \
                         " and added it to your inventory."

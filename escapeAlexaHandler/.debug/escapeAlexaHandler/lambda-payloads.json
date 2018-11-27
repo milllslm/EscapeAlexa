@@ -4,14 +4,16 @@
             "version": "1.0",
             "session": {
                 "new": false,
-                "sessionId": "amzn1.echo-api.session.7d483218-4171-458e-8c66-ec4520e389dc",
+                "sessionId": "amzn1.echo-api.session.d532d639-643a-4c71-830f-785aab815ed9",
                 "application": {
                     "applicationId": "amzn1.ask.skill.08f1d462-a151-4df4-a396-6b0bf83e2b0e"
                 },
                 "attributes": {
-                    "curRoom": "{\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the room2. There remain no available items in this room that you may add to your inventory. In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": false, \"description\": \"an item\", \"name\": \"item\"}], \"edges\": [\"room2\"], \"name\": \"room\"}",
+                    "curRoom": "{\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the room2. In this room there is a item that may be added to your inventory at this time.In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"an item\", \"name\": \"item\"}], \"edges\": [\"room2\"], \"name\": \"room\"}",
                     "roomNameObjMap": "{\"endRoom\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"interactable2\", \"unlocked\": true}], \"description\": \"You have entered the endRoom . You may attempt move from this room to the room2. In this room there is a item3 that may be added to your inventory at this time.In terms of interactable objects, there is a interactable2.\", \"unlocked\": false, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"item3\"}], \"edges\": [\"room2\"], \"name\": \"endRoom\"}, \"room2\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [], \"name\": \"interactable2\", \"unlocked\": true}], \"description\": \"You have entered the room2 . You may attempt move from this room to the room, the endRoom. In this room there is a item2 that may be added to your inventory at this time.In terms of interactable objects, there is a interactable2.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": true, \"description\": \"another item\", \"name\": \"item2\"}], \"edges\": [\"room\", \"endRoom\"], \"name\": \"room2\"}, \"room\": {\"py/object\": \"escapeAlexaHandler/lambda_function.Room\", \"interactables\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Interactable\", \"validItemsToUnlockSelf\": [], \"hiddenItems\": [\"item\"], \"name\": \"interactable\", \"unlocked\": true}], \"description\": \"You have entered the room . You may attempt move from this room to the room2. There remain no available items in this room that you may add to your inventory. In terms of interactable objects, there is a interactable.\", \"unlocked\": true, \"items\": [{\"py/object\": \"escapeAlexaHandler/lambda_function.Item\", \"unlocked\": false, \"description\": \"an item\", \"name\": \"item\"}], \"edges\": [\"room2\"], \"name\": \"room\"}}",
-                    "inventory": []
+                    "inventory": [
+                        "Item"
+                    ]
                 },
                 "user": {
                     "userId": "amzn1.ask.account.AGOINRSARJTXZFDD5T4GHUMVRMN7VXPKDWDLSAR2BNNZNSLIHR3SLSZO5FZ4R3P2ZRND23IZ4JICBOPVVCNL7IRVFUOZW2RMPFVIZLWBGBDUZLZY7F672SXHDHEPOLTC5ZNIDAIIC4Y4RDINP22ETWU4RRWLOXUO2R7YDCIFLSHLLS3IYN4BIXD5OLYYIPMIYFS74VRDMIHM6QI"
@@ -30,7 +32,7 @@
                         "supportedInterfaces": {}
                     },
                     "apiEndpoint": "https://api.amazonalexa.com",
-                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzI5NjIyMSwiaWF0IjoxNTQzMjkyNjIxLCJuYmYiOjE1NDMyOTI2MjEsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.ORS6Zkr6NIlWijYMtwXQFNr1hZ794OXxLksRtyAWpuOeCe4c3zP1vOM7pEOUarQmHsP9lLBqaPVQLE2jvtxuVMES94u50BBp5-0Q68yzXrhnO8ZN9Eu7BhTTlUjXYcogrbpurX0IMPURG2-KNZhXnmytPFmMP-z10N2XRidk_lkZRjjwzTwxo2XM7ZPaL6UGN9jZSwDCfcSx9VSw_zFSZBpjCMIIKXEi5ftXLROSz4ccYg_LEkNfpdrR-lRD37FnSCJALztJ8kTaMxzfatkwL-jraUJmyfNK04SEyxY_woa5fIG19CKPlkjMMQRP6hcB0VSA-qeJKaYml7I3wh521g"
+                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjA4ZjFkNDYyLWExNTEtNGRmNC1hMzk2LTZiMGJmODNlMmIwZSIsImV4cCI6MTU0MzI5Nzg1OCwiaWF0IjoxNTQzMjk0MjU4LCJuYmYiOjE1NDMyOTQyNTgsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZaUEVTUFFRNEhJR00yN0w3UEk2QU5SUkVQNkNSN0JLQTNBTTVPTlNWUllFNjNIS0NUNUdDWlRPRFRZSkxIT1kzQ01LMkhXMkVPWEhNN0lNUFJLTDI0R1M1SFNXWU9QN1VJR09KWkhPTlNLUUtDRlZZWjZLNFhNREFCQ1pBQkw3TUNPUkpDV0NHWVRYVkdKUkY1RjdJUlk2RVVHNkZRV0U3NUFNN0FNSUpEVUNVNEVONFhVQyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFHT0lOUlNBUkpUWFpGREQ1VDRHSFVNVlJNTjdWWFBLRFdETFNBUjJCTk5aTlNMSUhSM1NMU1pPNUZaNFIzUDJaUk5EMjNJWjRKSUNCT1BWVkNOTDdJUlZGVU9aVzJSTVBGVklaTFdCR0JEVVpMWlk3RjY3MlNYSERIRVBPTFRDNVpOSURBSUlDNFk0UkRJTlAyMkVUV1U0UlJXTE9YVU8yUjdZRENJRkxTSExMUzNJWU40QklYRDVPTFlZSVBNSVlGUzc0VlJETUlITTZRSSJ9fQ.jzD2YqzhwHVWBagmrOdQ0PMOEHIl1xyUORwX4vfh4nbYacwtAbi1dHlABUQwTVMvlXU4oGfcIO3EXtT5mjBRrOH8OsgSlGlX-qIWfyZp3jz2W4fSykwH4ZDhAQjLI1n4Ds9gabwP3_LuH-lVbaKSaklv1NFCHT3k9xvabQ6A4v1qDlc9D_0aD7Nd2N8bU0FcZnJjzfJ_xkwtLOKxjcCucrDFuH-S8PPLdFyVKmEro57zdlfkAVwfVg08nmna166i52pXjDFH0vvSdLyXClQN56jb7eK04t7mcsL4TZQVWztIfE1bvziMi2ouNPrJpRA5PY46RHKzi8Ro34v0S1AG3g"
                 },
                 "Viewport": {
                     "experiences": [
@@ -54,15 +56,15 @@
             },
             "request": {
                 "type": "IntentRequest",
-                "requestId": "amzn1.echo-api.request.53ec4e3b-a272-4b3b-ac20-adcefb2e9871",
-                "timestamp": "2018-11-27T04:23:41Z",
+                "requestId": "amzn1.echo-api.request.f8dedca3-c1b6-4e2f-9679-4db6b3e46ffe",
+                "timestamp": "2018-11-27T04:50:58Z",
                 "locale": "en-US",
                 "intent": {
-                    "name": "InteractIntent",
+                    "name": "PickupIntent",
                     "confirmationStatus": "NONE",
                     "slots": {
-                        "Interactable": {
-                            "name": "Interactable",
+                        "Item": {
+                            "name": "Item",
                             "confirmationStatus": "NONE"
                         }
                     }
