@@ -98,29 +98,13 @@ class Room:
         
         self.description = build_room_description(self.name, self.edges, self.items, self.interactables)
         return interactedMap["text"]
+
         
-        #sample intialization of a room that works in a python repl
-##myInteractable = Interactable("interactable", "an interactable", True, [], ["item"])
+myRoom = Room("room", ["other room"], [Item("item", "an item", False)], [Interactable("interactable", True, [], ["item"])], True, [])
+secondRoom =  Room("other room", ["room", "endRoom"], [Item("other item", "another item", True)], [Interactable("other interactable", True, [], [])], True, [])
+endRoom = Room("endRoom", ["other room"], [Item("yet another item", "another item", True)], [Interactable("yet another interactable", True, [], [])], False, ["item"])
 
-##myRoom = Room("room", "a room", [], [Item("item", "an item", False)], [myInteractable])
-
-##print(myRoom.name)
-##print(myRoom.description)
-##print(myRoom.edges[0].name)
-
-##myRoom.edges.append(Edge("edge2", "another edge", True))
-
-#print(myRoom.onInteracted(myInteractable))
-
-#for item in myRoom.items:
-#  if item.isUnlocked():
-#    print(item.name)
-        
-myRoom = Room("room", ["room2"], [Item("item", "an item", False)], [Interactable("interactable", True, [], ["item"])], True, [])
-secondRoom =  Room("room2", ["room", "endRoom"], [Item("item2", "another item", True)], [Interactable("interactable2", True, [], [])], True, [])
-endRoom = Room("endRoom", ["room2"], [Item("item3", "another item", True)], [Interactable("interactable2", True, [], [])], False, ["item"])
-
-RoomNameObjMap = {"room" : myRoom, "room2": secondRoom, "endRoom": endRoom}
+RoomNameObjMap = {"room" : myRoom, "other room": secondRoom, "endRoom": endRoom}
 
 # --------------- Helpers that build all of the responses ----------------------
 
@@ -251,7 +235,7 @@ def pickup_item(intent, session):
     
     
     if 'Item' in intent['slots']:
-        itemToPickup = intent['slots']['Item']['name']
+        itemToPickup = intent['slots']['Item']['value']
         for item in curRoom.items:
             if item.name.lower() == itemToPickup.lower() and item.isUnlocked():
                 session_attributes.update(create_new_inventory_with_item(itemToPickup, priorInventory))
@@ -283,7 +267,7 @@ def interact_handler(intent, session):
 
     
     if 'Interactable' in intent['slots']:
-        thingToInteractWith = intent['slots']['Interactable']['name']
+        thingToInteractWith = intent['slots']['Interactable']['value']
         interactedObject = None
         for interactable in curRoom.interactables:
             if thingToInteractWith.lower() == interactable.name.lower():
@@ -297,7 +281,29 @@ def interact_handler(intent, session):
     session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
-
+def move_rooms(intent, session):
+    """ Move into a new room """
+    card_title = intent['name']
+    session_attributes = session['attributes']
+    curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
+    should_end_session = False
+    reprompt_text = "You are not able to enter that room from here, either the room is locked or is not accessible from this one."
+    room_names_list_ish =jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
+    room_names_list = room_names_list_ish.keys()
+    
+    if 'Edge' in intent['slots']:
+        roomToEnter = intent['slots']['Edge']['value']
+        if roomToEnter not in room_names_list or not jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter].unlocked:
+            speech_output = "You are not able to enter that room from here, either the room is locked or is not accessible from this one."
+        else:
+            #its a valid room, lets move
+            curRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter]
+            session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
+            speech_output = curRoom.description
+    else:
+        speech_output = "That is not a valid room to enter, please try again by saying, move to the , and then the room name"
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
+            
 def set_color_in_session(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
     user.
@@ -388,6 +394,8 @@ def on_intent(intent_request, session):
         return interact_handler(intent, session)
     elif intent_name == "PickupIntent":
         return pickup_item(intent, session)
+    elif intent_name == "MoveIntent":
+        return move_rooms(intent, session)
     elif intent_name == "WhatsMyColorIntent":
         return get_color_from_session(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
