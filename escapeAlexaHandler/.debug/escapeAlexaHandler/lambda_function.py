@@ -137,13 +137,18 @@ def build_response(session_attributes, speechlet_response):
         'response': speechlet_response
     }
 
-def list_movement_options(session):
+def list_movement_options(edges):
     """Lists movement options for the player in the current context"""
-    return " ".join(str(x.name) for x in session['attributes']['currentRoom'].edges)
+    return " ".join(str(x) for x in edges)
     
-def list_inventory_options(session):
+def list_inventory_options(priorInventory):
     """Lists inventory options for the player in the current context"""
-    return " ".join(str(x.name) for x in session['attributes']['inventory'])
+    #TODO:: grammar (empty list and "and")
+    return " ".join(str(x.name) for x in priorInventory)
+    
+def list_interactable_options(interactables):
+    """Lists the interactables available from a room's list of interactables """
+    return ", ".join(str(x.name) for x in interactables)
 
 # --------------- Functions that control the skill's behavior ------------------
 
@@ -186,6 +191,10 @@ def create_new_inventory_with_item(itemToPickup, priorInventory):
     return {"inventory": priorInventory}
 
 def first_room_dialogue(intent, session):
+    return recap_handler(intent, session)
+        
+def recap_handler(intent, session):
+    """Repeats the current room description """
     card_title = intent['name']
     
     session_attributes = {}
@@ -207,13 +216,25 @@ def list_options(intent, session):
     """
     card_title = intent['name']
     session_attributes = session['attributes']
+    # curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
+    if not session_attributes['inventory']:
+        priorInventory = []
+    else:
+        priorInventory = session_attributes['inventory']
+        
     should_end_session = False
-    movement_options = ""
     inventory_options = ""
-    movement_options = list_movement_options(session)
-    inventory_options = list_inventory_options(session)
-    built_in_alexa_options = "something something help and quit"
-    speech_output = "I got I got I got I got options, " + movement_options + " " + inventory_options + " " + built_in_alexa_options
+    inventory_options = list_inventory_options(priorInventory)
+    built_in_alexa_options = "To quit the game say, stop."
+    
+    speech_output = "You may enter an adjacent room by saying, move to, " \
+    "and then the name of an available edge. You may add any available item to your" \
+    " inventory by saying, pick up, and then the name of an available item. "+ \
+    "You may interact with any interactable in the given room by saying, interact with," \
+    "and then a valid interactable. Lastly, you may try and use an item by saying, use " \
+    "name-of-item on name-of-interactable-or-edge. Your inventory contains " + \
+    inventory_options + ". For a recap of the room you are in say, room recap. " + built_in_alexa_options
+    
     
     reprompt_text = "Didn't catch that what did you say"
     
@@ -259,6 +280,7 @@ def pickup_item(intent, session):
 
 def interact_handler(intent, session):
     "Interact with an interactable and resultant effects"
+    #TODO: double interaction = double item availability, remove from hiddenItems after first time
     card_title = intent['name']
     session_attributes = session['attributes']
     curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
@@ -370,55 +392,6 @@ def use_handler(intent, session):
     
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
-def set_color_in_session(intent, session):
-    """ Sets the color in the session and prepares the speech to reply to the
-    user.
-    """
-
-    card_title = intent['name']
-    session_attributes = {}
-    should_end_session = False
-
-    if 'Color' in intent['slots']:
-        favorite_color = intent['slots']['Color']['value']
-        session_attributes = create_favorite_color_attributes(favorite_color)
-        speech_output = "I now know your favorite color is " + \
-                        favorite_color + \
-                        ". You can ask me your favorite color by saying, " \
-                        "what's my favorite color?"
-        reprompt_text = "You can ask me your favorite color by saying, " \
-                        "what's my favorite color?"
-    else:
-        speech_output = "I'm not sure what your favorite color is. " \
-                        "Please try again."
-        reprompt_text = "I'm not sure what your favorite color is. " \
-                        "You can tell me your favorite color by saying, " \
-                        "my favorite color is red."
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
-
-
-def get_color_from_session(intent, session):
-    session_attributes = {}
-    reprompt_text = None
-
-    if session.get('attributes', {}) and "favoriteColor" in session.get('attributes', {}):
-        favorite_color = session['attributes']['favoriteColor']
-        speech_output = "Your favorite color is " + favorite_color + \
-                        ". Goodbye."
-        should_end_session = True
-    else:
-        speech_output = "I'm not sure what your favorite color is. " \
-                        "You can say, my favorite color is red."
-        should_end_session = False
-
-    # Setting reprompt_text to None signifies that we do not want to reprompt
-    # the user. If the user does not respond or says something that is not
-    # understood, the session will end.
-    return build_response(session_attributes, build_speechlet_response(
-        intent['name'], speech_output, reprompt_text, should_end_session))
-
-
 # --------------- Events ------------------
 
 def on_session_started(session_started_request, session):
@@ -450,9 +423,7 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     # Dispatch to your skill's intent handlers
-    if intent_name == "MyColorIsIntent":
-        return set_color_in_session(intent, session)
-    elif intent_name == "StartGameIntent":
+    if intent_name == "StartGameIntent":
         return first_room_dialogue(intent, session)
     elif intent_name == "OptionsIntent":
         return list_options(intent, session)
@@ -464,10 +435,10 @@ def on_intent(intent_request, session):
         return move_rooms(intent, session)
     elif intent_name == "UseIntent":
         return use_handler(intent, session)
-    elif intent_name == "WhatsMyColorIntent":
-        return get_color_from_session(intent, session)
+    elif intent_name == "RoomRecapIntent":
+        return recap_handler(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
-        return get_welcome_response()
+        return list_options(intent, session)
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
         return handle_session_end_request()
     else:

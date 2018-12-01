@@ -225,7 +225,7 @@ def list_options(intent, session):
     should_end_session = False
     inventory_options = ""
     inventory_options = list_inventory_options(priorInventory)
-    built_in_alexa_options = "To quit the game say, stop."
+    built_in_alexa_options = "To q.it the game say, stop"
     
     speech_output = "You may enter an adjacent room by saying, move to, " \
     "and then the name of an available edge. You may add any available item to your" \
@@ -392,6 +392,55 @@ def use_handler(intent, session):
     
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
 
+def set_color_in_session(intent, session):
+    """ Sets the color in the session and prepares the speech to reply to the
+    user.
+    """
+
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = False
+
+    if 'Color' in intent['slots']:
+        favorite_color = intent['slots']['Color']['value']
+        session_attributes = create_favorite_color_attributes(favorite_color)
+        speech_output = "I now know your favorite color is " + \
+                        favorite_color + \
+                        ". You can ask me your favorite color by saying, " \
+                        "what's my favorite color?"
+        reprompt_text = "You can ask me your favorite color by saying, " \
+                        "what's my favorite color?"
+    else:
+        speech_output = "I'm not sure what your favorite color is. " \
+                        "Please try again."
+        reprompt_text = "I'm not sure what your favorite color is. " \
+                        "You can tell me your favorite color by saying, " \
+                        "my favorite color is red."
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+
+
+def get_color_from_session(intent, session):
+    session_attributes = {}
+    reprompt_text = None
+
+    if session.get('attributes', {}) and "favoriteColor" in session.get('attributes', {}):
+        favorite_color = session['attributes']['favoriteColor']
+        speech_output = "Your favorite color is " + favorite_color + \
+                        ". Goodbye."
+        should_end_session = True
+    else:
+        speech_output = "I'm not sure what your favorite color is. " \
+                        "You can say, my favorite color is red."
+        should_end_session = False
+
+    # Setting reprompt_text to None signifies that we do not want to reprompt
+    # the user. If the user does not respond or says something that is not
+    # understood, the session will end.
+    return build_response(session_attributes, build_speechlet_response(
+        intent['name'], speech_output, reprompt_text, should_end_session))
+
+
 # --------------- Events ------------------
 
 def on_session_started(session_started_request, session):
@@ -423,7 +472,9 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     # Dispatch to your skill's intent handlers
-    if intent_name == "StartGameIntent":
+    if intent_name == "MyColorIsIntent":
+        return set_color_in_session(intent, session)
+    elif intent_name == "StartGameIntent":
         return first_room_dialogue(intent, session)
     elif intent_name == "OptionsIntent":
         return list_options(intent, session)
@@ -437,6 +488,8 @@ def on_intent(intent_request, session):
         return use_handler(intent, session)
     elif intent_name == "RoomRecapIntent":
         return recap_handler(intent, session)
+    elif intent_name == "WhatsMyColorIntent":
+        return get_color_from_session(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return list_options(intent, session)
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
