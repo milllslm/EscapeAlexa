@@ -26,11 +26,11 @@ The skil interface was implemented within the Amazon Alexa developers platform a
 
 # Intents
 There are a number of intents to interact with the room. Upon the start of the game, the user will be read a description of the room, with imems and edges, or doors. With this information, the user will be able to interact with the items described and try to make it through an edge to the next room. Items picked up will be added to an inventory, and persist throughout the game. 
-Open Game: Play game, start, start game
-Item: Pick up {item}
-Using Item: Use {item} on {edge, interactable}
-Interaction: Interact with {interactable}
-Options: options, what can i do, choices, options please
+*Open Game: Play game, start, start game
+*Item: Pick up {item}
+*Using Item: Use {item} on {edge, interactable}
+*Interaction: Interact with {interactable}
+*Options: options, what can i do, choices, options please
 
 # Further Work
 Because the application is built on individual rooms, we can continue to add complexity to the game through more rooms, objects, and interactables. 
