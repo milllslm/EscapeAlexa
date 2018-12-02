@@ -182,9 +182,6 @@ def handle_session_end_request():
     return build_response({}, build_speechlet_response(
         card_title, speech_output, None, should_end_session))
 
-
-def create_favorite_color_attributes(favorite_color):
-    return {"favoriteColor": favorite_color}
     
 def create_new_inventory_with_item(itemToPickup, priorInventory):
     priorInventory.append(itemToPickup)
@@ -325,7 +322,11 @@ def move_rooms(intent, session):
             #its a valid room, lets move
             curRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter]
             session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
-            speech_output = curRoom.description
+            if curRoom.name == "endroom":
+                speech_output = "It's over you won congrats go home."
+                should_end_session = True
+            else:
+                speech_output = curRoom.description
     else:
         speech_output = "That is not a valid room to enter, please try again by saying, move to the , and then the room name"
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
