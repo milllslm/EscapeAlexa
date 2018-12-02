@@ -248,33 +248,29 @@ def pickup_item(intent, session):
         priorInventory = session_attributes['inventory']
     should_end_session = False
     speech_output = ""
-    reprompt_text = "I didn't quite catch that, please try again."
     
     
     if 'Item' in intent['slots']:
-        try:
-            itemToPickup = intent['slots']['Item']['value']
-            for item in curRoom.items:
-                if item.name.lower() == itemToPickup.lower() and item.isUnlocked():
-                    session_attributes.update(create_new_inventory_with_item(itemToPickup, priorInventory))
-                    curRoom.items = [x for x in curRoom.items if  itemToPickup.lower() != x.name.lower()]
-                    curRoom.updateDescription()
-                    newKeyVal = {curRoom.name: curRoom}
-                    oldRoomNameObjMap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
-                    oldRoomNameObjMap.update(newKeyVal)
-                    session_attributes.update({'roomNameObjMap': jsonpickle.encode(oldRoomNameObjMap)})
-                    session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
-                    speech_output = "You picked up the " + \
-                            itemToPickup + \
-                            " and added it to your inventory."
-                    reprompt_text = "You can pick up items by saying, pickup 'item name'"
-                    break
-    
-            if not speech_output:
-                speech_output = "You tried to pick up an item that either wasn't in this room or was not yet unlocked, try again."
-                reprompt_text = "That is not a valid item, please try again by saying, pick up and then a valid item"
-        except KeyError:
-            speech_output = "Alexa couldn't identify the item you were trying to pick up, please try again."
+        itemToPickup = intent['slots']['Item']['value']
+        for item in curRoom.items:
+            if item.name.lower() == itemToPickup.lower() and item.isUnlocked():
+                session_attributes.update(create_new_inventory_with_item(itemToPickup, priorInventory))
+                curRoom.items = [x for x in curRoom.items if  itemToPickup.lower() != x.name.lower()]
+                curRoom.updateDescription()
+                newKeyVal = {curRoom.name: curRoom}
+                oldRoomNameObjMap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
+                oldRoomNameObjMap.update(newKeyVal)
+                session_attributes.update({'roomNameObjMap': jsonpickle.encode(oldRoomNameObjMap)})
+                session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
+                speech_output = "You picked up the " + \
+                        itemToPickup + \
+                        " and added it to your inventory."
+                reprompt_text = "You can pick up items by saying, pickup 'item name'"
+                break
+
+        if not speech_output:
+            speech_output = "You tried to pick up an item that either wasn't in this room or was not yet unlocked, try again."
+            reprompt_text = "That is not a valid item, please try again by saying, pick up and then a valid item"
     else:
         speech_output = "That is not a valid item, please try again by saying, pick up and then a valid item"
         reprompt_text = "That is not a valid item, please try again by saying, pick up and then a valid item"
@@ -293,18 +289,15 @@ def interact_handler(intent, session):
 
     
     if 'Interactable' in intent['slots']:
-        try:
-            thingToInteractWith = intent['slots']['Interactable']['value']
-            interactedObject = None
-            for interactable in curRoom.interactables:
-                if thingToInteractWith.lower() == interactable.name.lower():
-                    interactedObject = interactable
-            if not interactedObject:
-                speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
-            else:
-                speech_output = curRoom.onInteracted(interactedObject)
-        except KeyError:
-            speech_output = "Alexa couldn't identify the room you were trying to enter, please try again."
+        thingToInteractWith = intent['slots']['Interactable']['value']
+        interactedObject = None
+        for interactable in curRoom.interactables:
+            if thingToInteractWith.lower() == interactable.name.lower():
+                interactedObject = interactable
+        if not interactedObject:
+            speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
+        else:
+            speech_output = curRoom.onInteracted(interactedObject)
     else:
         speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
     session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
@@ -326,25 +319,18 @@ def move_rooms(intent, session):
     room_names_list = room_names_list_ish.keys()
     
     if 'Edge' in intent['slots']:
-        try:
-            roomToEnter = intent['slots']['Edge']['value']
-            if roomToEnter not in room_names_list:
-                speech_output = "You are trying to move into a room that does not exist."
-            elif not jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter].unlocked: 
-                speech_output = "I'm sorry, this room is currently locked, try using an item on it!"        
-            elif roomToEnter not in curRoom.edges:
-                speech_output = "You are not able to enter that room from here."
+        roomToEnter = intent['slots']['Edge']['value']
+        if roomToEnter not in room_names_list or not jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter].unlocked or roomToEnter not in curRoom.edges:
+            speech_output = "You are not able to enter that room from here, either the room is locked or is not accessible from this one."
+        else:
+            #its a valid room, lets move
+            curRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter]
+            session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
+            if curRoom.name == "endroom":
+                speech_output = "It's over you won congrats go home."
+                should_end_session = True
             else:
-                #its a valid room, lets move
-                curRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter]
-                session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
-                if curRoom.name == "endroom":
-                    speech_output = "It's over you won congrats go home."
-                    should_end_session = True
-                else:
-                    speech_output = curRoom.description
-        except KeyError:
-            speech_output = "Alexa couldn't identify the room you were trying to enter, please try again."
+                speech_output = curRoom.description
     else:
         speech_output = "That is not a valid room to enter, please try again by saying, move to the , and then the room name"
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
@@ -363,51 +349,49 @@ def use_handler(intent, session):
     
     if 'UsedOn' in intent['slots'] and 'Item' in intent['slots']:
         #check for valid items and valid usedon, then do the action
-        try:
-            usedOnName = intent['slots']['UsedOn']['value']
-            itemName = intent['slots']['Item']['value']
-            if itemName not in priorInventory:
-                speech_output = "You tried using an item that does not exist in your inventory, try again please."
-            else:
-                oldRoomNameObjMap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
-                room_names_list = oldRoomNameObjMap.keys()
-                if usedOnName in room_names_list:
-                    #they tried using item on a room, see if its valid from here
-                    if usedOnName in curRoom.edges:
-                        #the room is within striking distance of this current room, check if item works on it
-                        nextRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[usedOnName]
-                        if itemName in nextRoom.validItemsToUnlockSelf:
-                            #unlock that bad boy
-                            nextRoom.unlocked = True
-                            #need to update with the new key value pair
-                            newKeyVal = {usedOnName: nextRoom}
-                            oldRoomNameObjMap.update(newKeyVal)
-                            session_attributes.update({'roomNameObjMap': jsonpickle.encode(oldRoomNameObjMap)})
-                            speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now enter that room."
-                        else:
-                            #this item doesnt work with this room
-                            speech_output = "The item you are using does not work on the room you are trying it on, try again."
+        usedOnName = intent['slots']['UsedOn']['value']
+        itemName = intent['slots']['Item']['value']
+        if itemName not in priorInventory:
+            speech_output = "You tried using an item that does not exist in your inventory, try again please."
+        else:
+            oldRoomNameObjMap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
+            room_names_list = oldRoomNameObjMap.keys()
+            if usedOnName in room_names_list:
+                #they tried using item on a room, see if its valid from here
+                if usedOnName in curRoom.edges:
+                    #the room is within striking distance of this current room, check if item works on it
+                    nextRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[usedOnName]
+                    if itemName in nextRoom.validItemsToUnlockSelf:
+                        #unlock that bad boy
+                        nextRoom.unlocked = True
+                        #need to update with the new key value pair
+                        newKeyVal = {usedOnName: nextRoom}
+                        oldRoomNameObjMap.update(newKeyVal)
+                        session_attributes.update({'roomNameObjMap': jsonpickle.encode(oldRoomNameObjMap)})
+                        speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now enter that room."
                     else:
-                        #desired room is not within striking distance
-                        speech_output = "You are trying to use your item on a room that is not accessible from the one you are currently in, try moving!"
+                        #this item doesnt work with this room
+                        speech_output = "The item you are using does not work on the room you are trying it on, try again."
                 else:
-                    #they tried using item on an interactable, see if its valid in given room then with given item
-                    interactedObject = None
-                    for interactable in curRoom.interactables:
-                        if usedOnName.lower() == interactable.name.lower():
-                            interactedObject = interactable
-                    if not interactedObject:
-                        speech_output = "The interactable that you are trying to use your item on is not in the current room."
+                    #desired room is not within striking distance
+                    speech_output = "You are trying to use your item on a room that is not accessible from the one you are currently in, try moving!"
+            else:
+                #they tried using item on an interactable, see if its valid in given room then with given item
+                interactedObject = None
+                for interactable in curRoom.interactables:
+                    if usedOnName.lower() == interactable.name.lower():
+                        interactedObject = interactable
+                if not interactedObject:
+                    speech_output = "The interactable that you are trying to use your item on is not in the current room."
+                else:
+                    #valid item, valid interactable, check if they match up
+                    if usedOnName in interactedObject.validItemsToUnlockSelf:
+                        #unlock that bad boy
+                        interactedObject.unlocked = True
+                        speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now interact with it."
                     else:
-                        #valid item, valid interactable, check if they match up
-                        if usedOnName in interactedObject.validItemsToUnlockSelf:
-                            #unlock that bad boy
-                            interactedObject.unlocked = True
-                            speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now interact with it."
-                        else:
-                            speech_output = "The item you are using is not valid for unlocking the interactable in question, try again."
-        except KeyError:
-            speech_output = "Alexa couldn't identify the item you were trying to use or whatever you were trying to use it on, please try again."
+                        speech_output = "The item you are using is not valid for unlocking the interactable in question, try again."
+        
     else:
         speech_output = "You either tried to use an item that does not exist or tried to use said item on an interactable or edge that does not exist."
     
