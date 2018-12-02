@@ -48,8 +48,13 @@ class Interactable:
         #do something, currentRoom.items += hiddenItems, maybe room
         #needs an onInteracted(self, interactable)
         #will need to return a map with :text and :itemsToAdd
-        return {"text" : "you interacted with " + self.name + ". Inside you found " + ', '.join(self.hiddenItems) + ".",
-        "itemsToAdd" : self.hiddenItems}
+        if not self.hiddenItems:
+            endText = "Nothing of note was found inside."
+        else:
+            endText = "Inside you found a " + ", a ".join(self.hiddenItems[:-2] + [" and ".join(self.hiddenItems[-2:])])+ "."
+        
+        textToReturn = "You interacted with " + self.name + ". " + endText
+        return {"text" : textToReturn, "itemsToAdd" : self.hiddenItems}
 
 def build_room_description(name, edges, items, interactables):
     name_sentence = "You have entered the " + name + " . "
@@ -71,7 +76,7 @@ def build_room_description(name, edges, items, interactables):
         items_sentence = "There remain no available items in this room that you may add to your inventory. "
     else:
         #make this more grammatically correct/flexible later
-        items_sentence = "In this room there is a " + ", a ".join(str(x.name) for x in available_items) + " that may be added to your inventory at this time."
+        items_sentence = "In this room there is a " + ", a ".join(str(x.name) for x in available_items) + " that may be added to your inventory at this time. "
     
     if not interactables:
         interactables_sentence = "In terms of interactable objects, there are none."
