@@ -13,7 +13,7 @@ import jsonpickle.tags as tags
 import jsonpickle.unpickler as unpickler
 import jsonpickle.util as util
 
-from models import Edge, Item, Interactable, Room
+from models import Edge
         
 #ITEMS
 paperclip = Item("paperclip", False)
