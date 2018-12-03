@@ -153,6 +153,28 @@ def list_options(intent, session):
     """
     card_title = intent['name']
     session_attributes = session['attributes']
+        
+    should_end_session = False
+    built_in_alexa_options = "To quit the game say, stop."
+    
+    speech_output = "You may enter an adjacent room by saying, move to, " \
+    "and then the name of an available edge. You may add any available item to your" \
+    " inventory by saying, pick up, and then the name of an available item. "+ \
+    "You may interact with any interactable in the given room by saying, interact with," \
+    "and then a valid interactable. Lastly, you may try and use an item by saying, use " \
+    "name-of-item on name-of-interactable-or-edge. To view your inventory say, inventory. " \
+    ". For a recap of the room you are in say, room recap. " + built_in_alexa_options
+    
+    
+    reprompt_text = "Didn't catch that what did you say"
+    
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+
+def inventory_handler(intent, session):
+    """Lists the inventory for the player """
+    card_title = intent['name']
+    session_attributes = session['attributes']
     if not session_attributes['inventory']:
         priorInventory = []
     else:
@@ -161,22 +183,11 @@ def list_options(intent, session):
     should_end_session = False
     inventory_options = ""
     inventory_options = list_inventory_options(priorInventory)
-    built_in_alexa_options = "To quit the game say, stop."
-    
-    speech_output = "You may enter an adjacent room by saying, move to, " \
-    "and then the name of an available edge. You may add any available item to your" \
-    " inventory by saying, pick up, and then the name of an available item. "+ \
-    "You may interact with any interactable in the given room by saying, interact with," \
-    "and then a valid interactable. Lastly, you may try and use an item by saying, use " \
-    "name-of-item on name-of-interactable-or-edge. Your inventory contains " + \
-    inventory_options + ". For a recap of the room you are in say, room recap. " + built_in_alexa_options
-    
-    
+    speech_output = "Your inventory contains " + inventory_options + "."
     reprompt_text = "Didn't catch that what did you say"
     
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
-
 
 def pickup_item(intent, session):
     "Picks up an item and adds it to the players inventory"
@@ -397,6 +408,8 @@ def on_intent(intent_request, session):
         return list_options(intent, session)
     elif intent_name == "InteractIntent":
         return interact_handler(intent, session)
+    elif intent_name == "InventoryIntent":
+        return inventory_handler(intent, session)
     elif intent_name == "PickupIntent":
         return pickup_item(intent, session)
     elif intent_name == "MoveIntent":
@@ -431,15 +444,6 @@ def lambda_handler(event, context):
     """
     print("event.session.application.applicationId=" +
           event['session']['application']['applicationId'])
-
-    """
-    Uncomment this if statement and populate with your skill's application ID to
-    prevent someone else from configuring a skill that sends requests to this
-    function.
-    """
-    # if (event['session']['application']['applicationId'] !=
-    #         "amzn1.echo-sdk-ams.app.[unique-value-here]"):
-    #     raise ValueError("Invalid Application ID")
 
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
