@@ -126,11 +126,11 @@ sink = Interactable("sink", True, [], ["eyeball"])
 bathtub = Interactable("bathtub", True, [], ["crowbar"])
 eyeless_painting = Interactable("eyeless painting", False, ["eyeball"], ["flashlight"])
 cracked_painting = Interactable("cracked painting", False, ["crowbar"], ["hammer"])
-shoe_box = Interactable("shoe box", True, [], [])
+shoe_box = Interactable("shoe box", True, [], ["blue key"])
 skull_chest = Interactable("skull chest", False, ["skull"], ["fingerprint"])
-hollow_wall = Interactable("hollow wall", False, ["hammer"], ["screwdriver"])
+hollow_wall = Interactable("hollow_wall", False, ["hammer"], ["screwdriver"])
 oven = Interactable("oven", False, ["flashlight"], ["glove", "blue key"])
-bookshelf = Interactable("bookshelf", True, [], ["skull"])
+bookshelf = Interactable("interactable", True, [], ["skull"])
 loosely_screwed_floorboard = Interactable("loosely screwed floorboard", False, ["screwdriver"], [])
 
 
@@ -444,11 +444,6 @@ def use_handler(intent, session):
                         if itemName in interactedObject.validItemsToUnlockSelf:
                             #unlock that bad boy
                             interactedObject.unlocked = True
-                            session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
-                            newKeyVal = {curRoom.name: curRoom}
-                            oldRoomNameObjMap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
-                            oldRoomNameObjMap.update(newKeyVal)
-                            session_attributes.update({'roomNameObjMap': jsonpickle.encode(oldRoomNameObjMap)})
                             speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now interact with it."
                         else:
                             speech_output = "The item you are using is not valid for unlocking the interactable in question, try again."

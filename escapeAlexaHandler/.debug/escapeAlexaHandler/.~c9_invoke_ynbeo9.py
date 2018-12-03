@@ -126,28 +126,22 @@ sink = Interactable("sink", True, [], ["eyeball"])
 bathtub = Interactable("bathtub", True, [], ["crowbar"])
 eyeless_painting = Interactable("eyeless painting", False, ["eyeball"], ["flashlight"])
 cracked_painting = Interactable("cracked painting", False, ["crowbar"], ["hammer"])
-shoe_box = Interactable("shoe box", True, [], [])
+shoe_box = Interactable("shoe box", True, [], ["blue key"])
 skull_chest = Interactable("skull chest", False, ["skull"], ["fingerprint"])
-hollow_wall = Interactable("hollow wall", False, ["hammer"], ["screwdriver"])
+hollow_wall = Interactable("hollow_wall", False, ["hammer"], ["screwdriver"])
 oven = Interactable("oven", False, ["flashlight"], ["glove", "blue key"])
-bookshelf = Interactable("bookshelf", True, [], ["skull"])
-loosely_screwed_floorboard = Interactable("loosely screwed floorboard", False, ["screwdriver"], [])
+bookshelf = Interactable("interactable", True, [], ["skull"])
 
 
 #ROOMS
 bathroom = Room("bathroom", ["hallway"], [red_key, paperclip, eyeball, crowbar], [toilet_paper, lockbox, bathtub, sink], True, [])
-hallway = Room("hallway", ["bathroom", "attic", "library"], [flashlight, hammer], [eyeless_painting, cracked_painting], False, ["red key"])
-attic = Room("attic", ["hallway", "kitchen"], [fingerprint], [shoe_box, skull_chest], True, [])
-kitchen = Room("kitchen", ["attic"], [glove, blue_key, screwdriver], [oven, hollow_wall], True, [])
-library = Room("library", ["hallway", "outside"], [skull], [bookshelf, loosely_screwed_floorboard], False, ["blue key"])
-outside = Room("outside", ["library"], [], [], False, ["fingerprint"])
 
         
-#myRoom = Room("room", ["other room"], [Item("item",  False)], [Interactable("interactable", True, [], ["item"])], True, [])
-#secondRoom =  Room("other room", ["room", "endroom"], [Item("other item", True)], [Interactable("other interactable", True, [], [])], True, [])
-#endRoom = Room("endroom", ["other room"], [Item("yet another item", True)], [Interactable("yet another interactable", True, [], [])], False, ["item"])
+myRoom = Room("room", ["other room"], [Item("item",  False)], [Interactable("interactable", True, [], ["item"])], True, [])
+secondRoom =  Room("other room", ["room", "endroom"], [Item("other item", True)], [Interactable("other interactable", True, [], [])], True, [])
+endRoom = Room("endroom", ["other room"], [Item("yet another item", True)], [Interactable("yet another interactable", True, [], [])], False, ["item"])
 
-RoomNameObjMap = {"bathroom" : bathroom, "hallway": hallway, "attic": attic, "kitchen": kitchen, "library": library, "outside": outside}
+RoomNameObjMap = {"room" : myRoom, "other room": secondRoom, "endroom": endRoom}
 
 # --------------- Helpers that build all of the responses ----------------------
 
@@ -194,7 +188,7 @@ def get_welcome_response():
     """
     global myRoom
     session_attributes = {}
-    session_attributes = {"curRoom": jsonpickle.encode(bathroom), "inventory": [], "roomNameObjMap": jsonpickle.encode(RoomNameObjMap)} #load the room from json or something, curRoom: Room1, inventory: []
+    session_attributes = {"curRoom": jsonpickle.encode(myRoom), "inventory": [], "roomNameObjMap": jsonpickle.encode(RoomNameObjMap)} #load the room from json or something, curRoom: Room1, inventory: []
     card_title = "Welcome"
     speech_output = "Welcome to the Alexa Escape Game. " \
                     "This game will walk you through various rooms in your quest to escape the house. " \
@@ -379,7 +373,7 @@ def move_rooms(intent, session):
                 #its a valid room, lets move
                 curRoom = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))[roomToEnter]
                 session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
-                if curRoom.name == "outside":
+                if curRoom.name == "endroom":
                     speech_output = "It's over you won congrats go home."
                     should_end_session = True
                 else:
@@ -441,14 +435,9 @@ def use_handler(intent, session):
                         speech_output = "The interactable that you are trying to use your item on is not in the current room."
                     else:
                         #valid item, valid interactable, check if they match up
-                        if itemName in interactedObject.validItemsToUnlockSelf:
+                        if usedOnName in interactedObject.validItemsToUnlockSelf:
                             #unlock that bad boy
                             interactedObject.unlocked = True
-                            session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
-                            newKeyVal = {curRoom.name: curRoom}
-                            oldRoomNameObjMap = jsonpickle.decode(session_attributes['roomNameObjMap'], classes=(Room, Interactable, Item))
-                            oldRoomNameObjMap.update(newKeyVal)
-                            session_attributes.update({'roomNameObjMap': jsonpickle.encode(oldRoomNameObjMap)})
                             speech_output = "You successfully used the " + itemName + " to unlock the " + usedOnName + ", you may now interact with it."
                         else:
                             speech_output = "The item you are using is not valid for unlocking the interactable in question, try again."
