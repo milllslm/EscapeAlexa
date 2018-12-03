@@ -43,10 +43,7 @@ class Interactable:
     def isUnlocked(self):
         return self.unlocked
         
-    def onInteracted(self): #maybe we pass in what interacted with it?
-        #do something, currentRoom.items += hiddenItems, maybe room
-        #needs an onInteracted(self, interactable)
-        #will need to return a map with :text and :itemsToAdd
+    def onInteracted(self): 
         if not self.hiddenItems:
             endText = "Nothing of note was found inside."
         else:
@@ -73,12 +70,11 @@ def build_room_description(name, edges, items, interactables):
     if not available_items:
         items_sentence = "There remain no available items in this room that you may add to your inventory. "
     else:
-        #TODO: make this more grammatically correct/flexible later
-        items_sentence = "In this room there is a " + ", a ".join(str(x.name) for x in available_items) + " that may be added to your inventory at this time. "
+        items_sentence = "In this room there is a " + ", a ".join([str(x.name) for x in available_items[:-2]] + [" or a ".join(str(x.name) for x in available_items[-2:])]) + " that may be added to your inventory at this time. "
     if not interactables:
         interactables_sentence = "In terms of interactable objects, there are none."
     else:
-        interactables_sentence = "In terms of interactable objects, there is a " + ", a ".join(str(x.name) for x in interactables) + "."
+        interactables_sentence = "In terms of interactable objects, there is a " + ", a ".join([str(x.name) for x in interactables[:-2]] + [" and a ".join(str(x.name) for x in interactables[-2:])]) + "."
     
     return name_sentence + edges_sentence + items_sentence + interactables_sentence
     
@@ -141,11 +137,6 @@ attic = Room("attic", ["hallway", "kitchen"], [fingerprint], [shoe_box, skull_ch
 kitchen = Room("kitchen", ["attic"], [glove, blue_key, screwdriver], [oven, hollow_wall], True, [])
 library = Room("library", ["hallway", "outside"], [skull], [bookshelf, loosely_screwed_floorboard], False, ["blue key"])
 outside = Room("outside", ["library"], [], [], False, ["fingerprint"])
-
-        
-#myRoom = Room("room", ["other room"], [Item("item",  False)], [Interactable("interactable", True, [], ["item"])], True, [])
-#secondRoom =  Room("other room", ["room", "endroom"], [Item("other item", True)], [Interactable("other interactable", True, [], [])], True, [])
-#endRoom = Room("endroom", ["other room"], [Item("yet another item", True)], [Interactable("yet another interactable", True, [], [])], False, ["item"])
 
 RoomNameObjMap = {"bathroom" : bathroom, "hallway": hallway, "attic": attic, "kitchen": kitchen, "library": library, "outside": outside}
 
@@ -211,7 +202,7 @@ def get_welcome_response():
 
 def handle_session_end_request():
     card_title = "Session Ended"
-    speech_output = "Thank you for trying the Alexa Escape Game. " \
+    speech_output = "Thank you for playing the Alexa Escape Game. " \
                     "Have a nice day! "
     # Setting this to true ends the session and exits the skill.
     should_end_session = True
@@ -249,7 +240,6 @@ def list_options(intent, session):
     """
     card_title = intent['name']
     session_attributes = session['attributes']
-    # curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
     if not session_attributes['inventory']:
         priorInventory = []
     else:
@@ -322,7 +312,6 @@ def pickup_item(intent, session):
 
 def interact_handler(intent, session):
     "Interact with an interactable and resultant effects"
-    #TODO: double interaction = double item availability, remove from hiddenItems after first time
     card_title = intent['name']
     session_attributes = session['attributes']
     curRoom = jsonpickle.decode(session_attributes['curRoom'], classes=(Room, Interactable, Item))
@@ -464,7 +453,6 @@ def use_handler(intent, session):
 def on_session_started(session_started_request, session):
     """ Called when the session starts """
 
-    #load house(json file or something), gonna need to point session to the room below somehow
     print("on_session_started requestId=" + session_started_request['requestId']
           + ", sessionId=" + session['sessionId'])
 
