@@ -51,7 +51,7 @@ class Interactable:
         if not self.hiddenItems:
             endText = "Nothing of note was found inside."
         else:
-            endText = "Inside you found a " + ", a ".join(self.hiddenItems[:-2] + [" and a ".join(self.hiddenItems[-2:])])+ "."
+            endText = "Inside you found a " + ", a ".join(self.hiddenItems[:-2] + [" and ".join(self.hiddenItems[-2:])])+ "."
         
         textToReturn = "You interacted with " + self.name + ". " + endText
         return {"text" : textToReturn, "itemsToAdd" : self.hiddenItems}
@@ -64,7 +64,7 @@ def build_room_description(name, edges, items, interactables):
     if not edges:
         edges_sentence = "There are no escapes from this room."
     else:
-        edges_sentence = "You may attempt to move from this room to the " + ", the ".join(edges[:-2] + [" or the ".join(edges[-2:])]) + ". "
+        edges_sentence = "You may attempt move from this room to the " + ", the ".join(edges[:-2] + [" and ".join(edges[-2:])]) + ". "
     
     available_items = []
     for item in items:

@@ -51,7 +51,7 @@ class Interactable:
         if not self.hiddenItems:
             endText = "Nothing of note was found inside."
         else:
-            endText = "Inside you found a " + ", a ".join(self.hiddenItems[:-2] + [" and a ".join(self.hiddenItems[-2:])])+ "."
+            endText = "Inside you found a " + ", a ".join(self.hiddenItems[:-2] + [" and ".join(self.hiddenItems[-2:])])+ "."
         
         textToReturn = "You interacted with " + self.name + ". " + endText
         return {"text" : textToReturn, "itemsToAdd" : self.hiddenItems}
@@ -64,7 +64,8 @@ def build_room_description(name, edges, items, interactables):
     if not edges:
         edges_sentence = "There are no escapes from this room."
     else:
-        edges_sentence = "You may attempt to move from this room to the " + ", the ".join(edges[:-2] + [" or the ".join(edges[-2:])]) + ". "
+        #make this more grammatically correct/flexible later
+        edges_sentence = "You may attempt to move from this room to the " + ", the ".join(edges[:-2] + [" and ".join(edges[-2:])]) + ". "
     
     available_items = []
     for item in items:
@@ -74,8 +75,9 @@ def build_room_description(name, edges, items, interactables):
     if not available_items:
         items_sentence = "There remain no available items in this room that you may add to your inventory. "
     else:
-        #TODO: make this more grammatically correct/flexible later
-        items_sentence = "In this room there is a " + ", a ".join(str(x.name) for x in available_items) + " that may be added to your inventory at this time. "
+        #make this more grammatically correct/flexible later
+        items_sentence = "In this room there is a " + ", a ".join(x.name[:-2] + [" and ".join(x.name[-2:])]for x in available_items) + " that may be added to your inventory at this time. "
+    
     if not interactables:
         interactables_sentence = "In terms of interactable objects, there are none."
     else:
