@@ -88,7 +88,7 @@ def list_inventory_options(priorInventory):
     if not priorInventory:
         return "no items"
     else:
-        return ", ".join(priorInventory[:-2] + [" and ".join(priorInventory[-2:])])
+        return "a " + ", a".join(priorInventory[:-2] + [" and ".join(priorInventory[-2:])])
 
 # --------------- Functions that control the skill's behavior ------------------
 
