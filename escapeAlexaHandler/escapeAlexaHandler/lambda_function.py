@@ -258,7 +258,7 @@ def interact_handler(intent, session):
             else:
                 speech_output = curRoom.onInteracted(interactedObject)
         except KeyError:
-            speech_output = "Alexa couldn't identify the room you were trying to enter, please try again."
+            speech_output = "Alexa couldn't identify the interactable you were trying to interact with, please try again."
     else:
         speech_output = "That is not a valid interactable, please try again by saying, interact with, and then a valid interactable"
     session_attributes.update({'curRoom': jsonpickle.encode(curRoom)})
