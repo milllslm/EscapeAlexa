@@ -1,0 +1,495 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "escape game",
+            "intents": [
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "help"
+                    ]
+                },
+                {
+                    "name": "StartGameIntent",
+                    "slots": [],
+                    "samples": [
+                        "play game",
+                        "start",
+                        "start game"
+                    ]
+                },
+                {
+                    "name": "OptionsIntent",
+                    "slots": [],
+                    "samples": [
+                        "what can I do",
+                        "choices",
+                        "what are my options",
+                        "options please",
+                        "options"
+                    ]
+                },
+                {
+                    "name": "PickupIntent",
+                    "slots": [
+                        {
+                            "name": "Item",
+                            "type": "LIST_OF_ITEMS"
+                        }
+                    ],
+                    "samples": [
+                        "pick up {Item}"
+                    ]
+                },
+                {
+                    "name": "InteractIntent",
+                    "slots": [
+                        {
+                            "name": "Interactable",
+                            "type": "LIST_OF_INTERACTABLES"
+                        }
+                    ],
+                    "samples": [
+                        "interact with {Interactable}"
+                    ]
+                },
+                {
+                    "name": "MoveIntent",
+                    "slots": [
+                        {
+                            "name": "Edge",
+                            "type": "LIST_OF_ROOMS"
+                        }
+                    ],
+                    "samples": [
+                        "move to the {Edge}"
+                    ]
+                },
+                {
+                    "name": "UseIntent",
+                    "slots": [
+                        {
+                            "name": "Item",
+                            "type": "LIST_OF_ITEMS"
+                        },
+                        {
+                            "name": "UsedOn",
+                            "type": "LIST_OF_INTERACTABLES_AND_EDGES"
+                        }
+                    ],
+                    "samples": [
+                        "use {Item} on {UsedOn}"
+                    ]
+                },
+                {
+                    "name": "RoomRecapIntent",
+                    "slots": [],
+                    "samples": [
+                        "recap",
+                        "recap room",
+                        "room recap"
+                    ]
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "cancel"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "stop"
+                    ]
+                },
+                {
+                    "name": "InventoryIntent",
+                    "slots": [],
+                    "samples": [
+                        "what is my inventory",
+                        "inventory please",
+                        "inventory"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "LIST_OF_ITEMS",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "fingerprint"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "skull"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "glove"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "screwdriver"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "blue key"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hammer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "flashlight"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "crowbar"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eyeball"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "red key"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "paperclip"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "yet another item"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "other item"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "item"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "LIST_OF_INTERACTABLES",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "loosely screwed floorboard"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bookshelf"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "oven"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hollow wall"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "skull chest"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "shoe box"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cracked painting"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eyeless painting"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bathtub"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sink"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lockbox"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "yet another interactable"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "other interactable"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "interactable"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "picture frame"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "safe"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "chest"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "toilet paper"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "LIST_OF_ROOMS",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "outdoors"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "library"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "kitchen"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "attic"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hallway"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bathroom"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "endroom"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "other room"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "room"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "LIST_OF_INTERACTABLES_AND_EDGES",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "loosely screwed floorboard"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bookshelf"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "oven"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hollow wall"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "skull chest"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "shoe box"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cracked painting"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eyeless painting"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bathtub"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sink"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lockbox"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "toilet paper"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "outside"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "library"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "kitchen"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "attick"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hallway"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bathroom"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "endroom"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "other room"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "room"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "yet another interactable"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "other interactable"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "interactable"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "PickupIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Item",
+                            "type": "LIST_OF_ITEMS",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1217641177659.726487386013"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1217641177659.726487386013",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "what did you want to pick up?"
+                    }
+                ]
+            }
+        ]
+    }
+}
